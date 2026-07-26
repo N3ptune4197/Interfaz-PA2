@@ -209,13 +209,13 @@ public class jdInicioASesion extends javax.swing.JDialog {
 
     private void txtPaswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPaswordMousePressed
         // TODO add your handling code here:
-        if (String.valueOf(txtPasword.getPassword()).isEmpty()) {
+        if (String.valueOf(txtPasword.getPassword()).equals("********")) {
+            txtPasword.setText("");
+            txtPasword.setForeground(Color.black);
+        }
+        if (txtUsuario.getText().isEmpty()) {
             txtUsuario.setText("Ingrese su nombre de usuario");
             txtUsuario.setForeground(Color.gray);
-        }
-        if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
-            txtPasword.setText("");
-            txtUsuario.setForeground(Color.black);
         }
 
     }//GEN-LAST:event_txtPaswordMousePressed
