@@ -17,6 +17,9 @@ public class frmMenu extends javax.swing.JFrame {
      */
     public frmMenu() {
         initComponents();
+        jdInicioASesion objInicio = new jdInicioASesion(this, true);
+        objInicio.setLocationRelativeTo(objInicio);
+        objInicio.setVisible(true);
     }
 
     /**
@@ -28,47 +31,85 @@ public class frmMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bg = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnReportes = new javax.swing.JButton();
+        btnGestionarMat1 = new javax.swing.JButton();
+        btnGestionarProy = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        bg.setBackground(new java.awt.Color(255, 255, 255));
+        bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/orange-frame-frame-design-element-free-png.png"))); // NOI18N
+        bg.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 500));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ef0d225b-a049-44d5-ac12-b94d295eb503.png"))); // NOI18N
+        bg.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, 160));
+
+        jLabel3.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 153, 51));
+        jLabel3.setText("SISTEMA DE CONSTRUCCIÓN");
+        bg.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, -1, -1));
+
+        btnReportes.setBackground(new java.awt.Color(153, 153, 153));
+        btnReportes.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnReportes.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/informes-removebg-preview.png"))); // NOI18N
+        btnReportes.setText("| Reportes");
+        btnReportes.setHideActionText(true);
+        btnReportes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnReportes.setIconTextGap(20);
+        bg.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 300, -1));
+
+        btnGestionarMat1.setBackground(new java.awt.Color(153, 153, 153));
+        btnGestionarMat1.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnGestionarMat1.setForeground(new java.awt.Color(255, 255, 255));
+        btnGestionarMat1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/archivero-removebg-preview.png"))); // NOI18N
+        btnGestionarMat1.setText("| Gestionar Materiales");
+        btnGestionarMat1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnGestionarMat1.setIconTextGap(20);
+        btnGestionarMat1.addActionListener(this::btnGestionarMat1ActionPerformed);
+        bg.add(btnGestionarMat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 300, -1));
+
+        btnGestionarProy.setBackground(new java.awt.Color(153, 153, 153));
+        btnGestionarProy.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnGestionarProy.setForeground(new java.awt.Color(255, 255, 255));
+        btnGestionarProy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/proyecto-removebg-preview.png"))); // NOI18N
+        btnGestionarProy.setText("| Gestionar Proyectos");
+        btnGestionarProy.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnGestionarProy.setIconTextGap(20);
+        bg.add(btnGestionarProy, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 300, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnGestionarMat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarMat1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGestionarMat1ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new frmMenu().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bg;
+    private javax.swing.JButton btnGestionarMat1;
+    private javax.swing.JButton btnGestionarProy;
+    private javax.swing.JButton btnReportes;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
