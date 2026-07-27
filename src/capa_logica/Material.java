@@ -4,32 +4,31 @@
  */
 package capa_logica;
 
-/**
- *
- * @author MSI
- */
 public class Material {
+
     private String codigo;
     private String nombre;
     private String categoria;
-    private int unidad;
+    private String unidadMedida;
     private float costo;
     private int stock;
 
     public Material() {
-        this.codigo = "";
-        this.nombre = "";
-        this.categoria = "";
-        this.unidad = 0;
-        this.costo = 0;
-        this.stock = 0;
+        codigo = "";
+        nombre = "";
+        categoria = "";
+        unidadMedida = "";
+        costo = 0;
+        stock = 0;
     }
-    
-    public Material(String codigo, String nombre, String categoria, int unidad, float costo, int stock) {
+
+    public Material(String codigo, String nombre, String categoria,
+            String unidadMedida, float costo, int stock) {
+
         this.codigo = codigo;
         this.nombre = nombre;
         this.categoria = categoria;
-        this.unidad = unidad;
+        this.unidadMedida = unidadMedida;
         this.costo = costo;
         this.stock = stock;
     }
@@ -58,12 +57,12 @@ public class Material {
         this.categoria = categoria;
     }
 
-    public int getUnidad() {
-        return unidad;
+    public String getUnidadMedida() {
+        return unidadMedida;
     }
 
-    public void setUnidad(int unidad) {
-        this.unidad = unidad;
+    public void setUnidadMedida(String unidadMedida) {
+        this.unidadMedida = unidadMedida;
     }
 
     public float getCosto() {
@@ -84,11 +83,8 @@ public class Material {
 
     @Override
     public String toString() {
-        return "Material{" + "codigo=" + codigo + ", nombre=" + nombre + ", categoria=" + categoria + ", unidad=" + unidad + ", costo=" + costo + ", stock=" + stock + '}';
+        return "Material{" + "codigo=" + codigo + ", nombre=" + nombre + ", categoria=" + categoria + ", unidadMedida=" + unidadMedida + ", costo=" + costo + ", stock=" + stock + '}';
     }
-    
-    
-    
-    
-    
+
+
 }

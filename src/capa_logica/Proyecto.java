@@ -1,27 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package capa_logica;
 
-/**
- *
- * @author MSI
- */
 public class Proyecto {
+
     private String codigo;
     private String nombre;
     private String ubicacion;
     private String responsable;
 
     public Proyecto() {
-        this.codigo = "";
-        this.nombre = "";
-        this.ubicacion = "";
-        this.responsable = "";
+        codigo = "";
+        nombre = "";
+        ubicacion = "";
+        responsable = "";
     }
-    
-     public Proyecto(String codigo, String nombre, String ubicacion, String responsable) {
+
+    public Proyecto(String codigo, String nombre,
+            String ubicacion, String responsable) {
+
         this.codigo = codigo;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
@@ -64,9 +59,7 @@ public class Proyecto {
     public String toString() {
         return "Proyecto{" + "codigo=" + codigo + ", nombre=" + nombre + ", ubicacion=" + ubicacion + ", responsable=" + responsable + '}';
     }
-     
-     
 
-   
     
+
 }

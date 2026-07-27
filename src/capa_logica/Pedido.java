@@ -1,21 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+
+
 package capa_logica;
 
-/**
- *
- * @author MSI
- */
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+
+
 public class Pedido {
+
     private String codigo;
     private Proyecto proyecto;
     private Material material;
     private int cantidad;
-    private String fecha;
-    
-     public Pedido(String codigo, Proyecto proyecto, Material material, int cantidad, String fecha) {
+    private LocalDate fecha;
+
+    private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    public Pedido() {
+        codigo = "";
+        proyecto = null;
+        material = null;
+        cantidad = 0;
+        fecha = LocalDate.now();
+    }
+
+    public Pedido(String codigo, Proyecto proyecto,
+            Material material, int cantidad, LocalDate fecha) {
+
         this.codigo = codigo;
         this.proyecto = proyecto;
         this.material = material;
@@ -55,20 +68,31 @@ public class Pedido {
         this.cantidad = cantidad;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
+
+    public float getSubtotal() {
+        if (material == null) {
+            return 0;
+        }
+        return cantidad * material.getCosto();
+    }
+    
+    // METODO PARA FORMATEAR FECHAAAAAAAAAAAAAAAAAA dd/mm/yyyy
+    public String getFechaFormateada() {
+    return fecha.format(FORMATO);
+}
+    
+    
 
     @Override
     public String toString() {
         return "Pedido{" + "codigo=" + codigo + ", proyecto=" + proyecto + ", material=" + material + ", cantidad=" + cantidad + ", fecha=" + fecha + '}';
     }
-    
-    
-    
-    
+
 }
