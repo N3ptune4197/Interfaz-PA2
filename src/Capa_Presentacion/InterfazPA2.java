@@ -4,6 +4,8 @@
  */
 package Capa_Presentacion;
 
+import capa_presentacion.frmMenu;
+
 /**
  *
  * @author User
@@ -14,7 +16,9 @@ public class InterfazPA2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        frmMenu objeto = new frmMenu();
+        objeto.setLocationRelativeTo(objeto);
+        objeto.setVisible(true);
     }
     
 }
