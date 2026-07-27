@@ -1,10 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package capa_logica;
 
-public class Material {
+import java.io.Serializable;
+
+public class Material implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String codigo;
     private String nombre;
@@ -83,8 +83,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return "Material{" + "codigo=" + codigo + ", nombre=" + nombre + ", categoria=" + categoria + ", unidadMedida=" + unidadMedida + ", costo=" + costo + ", stock=" + stock + '}';
+        return nombre;
     }
-
 
 }

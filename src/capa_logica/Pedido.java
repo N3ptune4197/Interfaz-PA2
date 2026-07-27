@@ -1,39 +1,38 @@
-
-
-
 package capa_logica;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+public class Pedido implements Serializable {
 
-
-public class Pedido {
+    private static final long serialVersionUID = 1L;
 
     private String codigo;
-    private Proyecto proyecto;
     private Material material;
     private int cantidad;
     private LocalDate fecha;
 
-    private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter FORMATO =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Pedido() {
+
         codigo = "";
-        proyecto = null;
         material = null;
         cantidad = 0;
         fecha = LocalDate.now();
+
     }
 
-    public Pedido(String codigo, Proyecto proyecto,
-            Material material, int cantidad, LocalDate fecha) {
+    public Pedido(String codigo, Material material,
+            int cantidad, LocalDate fecha) {
 
         this.codigo = codigo;
-        this.proyecto = proyecto;
         this.material = material;
         this.cantidad = cantidad;
         this.fecha = fecha;
+
     }
 
     public String getCodigo() {
@@ -42,14 +41,6 @@ public class Pedido {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
-    }
-
-    public Proyecto getProyecto() {
-        return proyecto;
-    }
-
-    public void setProyecto(Proyecto proyecto) {
-        this.proyecto = proyecto;
     }
 
     public Material getMaterial() {
@@ -76,23 +67,24 @@ public class Pedido {
         this.fecha = fecha;
     }
 
-    public float getSubtotal() {
-        if (material == null) {
-            return 0;
-        }
-        return cantidad * material.getCosto();
-    }
-    
-    // METODO PARA FORMATEAR FECHAAAAAAAAAAAAAAAAAA dd/mm/yyyy
     public String getFechaFormateada() {
-    return fecha.format(FORMATO);
-}
-    
-    
+        return fecha.format(FORMATO);
+    }
+
+    public float getSubtotal() {
+
+        if (material == null)
+            return 0;
+
+        return cantidad * material.getCosto();
+
+    }
 
     @Override
     public String toString() {
-        return "Pedido{" + "codigo=" + codigo + ", proyecto=" + proyecto + ", material=" + material + ", cantidad=" + cantidad + ", fecha=" + fecha + '}';
+        return "Pedido{" + "codigo=" + codigo + ", material=" + material + ", cantidad=" + cantidad + ", fecha=" + fecha + '}';
     }
+
+    
 
 }
