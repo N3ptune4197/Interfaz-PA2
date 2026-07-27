@@ -48,12 +48,12 @@ public class frmMenu extends javax.swing.JFrame {
         bg.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 500));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ef0d225b-a049-44d5-ac12-b94d295eb503.png"))); // NOI18N
-        bg.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, 160));
+        bg.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, 160));
 
         jLabel3.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 153, 51));
         jLabel3.setText("SISTEMA DE CONSTRUCCIÓN");
-        bg.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, -1, -1));
+        bg.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, -1, -1));
 
         btnReportes.setBackground(new java.awt.Color(153, 153, 153));
         btnReportes.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
@@ -63,7 +63,7 @@ public class frmMenu extends javax.swing.JFrame {
         btnReportes.setHideActionText(true);
         btnReportes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnReportes.setIconTextGap(20);
-        bg.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, 300, -1));
+        bg.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 300, -1));
 
         btnGestionarMat1.setBackground(new java.awt.Color(153, 153, 153));
         btnGestionarMat1.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
@@ -73,7 +73,7 @@ public class frmMenu extends javax.swing.JFrame {
         btnGestionarMat1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnGestionarMat1.setIconTextGap(20);
         btnGestionarMat1.addActionListener(this::btnGestionarMat1ActionPerformed);
-        bg.add(btnGestionarMat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 300, -1));
+        bg.add(btnGestionarMat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 300, -1));
 
         btnGestionarProy.setBackground(new java.awt.Color(153, 153, 153));
         btnGestionarProy.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
@@ -82,13 +82,13 @@ public class frmMenu extends javax.swing.JFrame {
         btnGestionarProy.setText("| Gestionar Proyectos");
         btnGestionarProy.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnGestionarProy.setIconTextGap(20);
-        bg.add(btnGestionarProy, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 310, 300, -1));
+        bg.add(btnGestionarProy, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 300, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
