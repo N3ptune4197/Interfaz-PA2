@@ -4,6 +4,7 @@
  */
 package Capa_Presentacion;
 
+import Componentes.UtilidadFuentes;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -31,6 +32,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
 
         // Redondear los bordes del panel contenedor principal con FlatLaf
         // <-- Agregamos la llamada aquí
+        jLabel1.setFont(UtilidadFuentes.cargarFuenteVarsity(28f));
         aplicarEstiloBordesTecnicos();
 
         this.modoActual = modo;
@@ -228,7 +230,6 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
         jPanelFondo.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 440, 180, -1));
 
-        jLabel1.setFont(new java.awt.Font("Varsity Regular", 1, 28)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 101, 13));
         jLabel1.setText("gestión de materiales");
         jPanelFondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
