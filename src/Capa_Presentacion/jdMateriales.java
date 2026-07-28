@@ -4,14 +4,16 @@
  */
 package capa_presentacion;
 
+import Capa_Presentacion.jdFuncionesMaterial;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author JIMMYSIN
  */
 public class jdMateriales extends javax.swing.JDialog {
-    
+
     int xMouse, yMouse;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdMateriales.class.getName());
 
@@ -218,10 +220,24 @@ public class jdMateriales extends javax.swing.JDialog {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.AGREGAR, 0);
+        form.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+        int filaSeleccionada = tblMaterial.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            int idMaterial = Integer.parseInt(tblMaterial.getValueAt(filaSeleccionada, 0).toString());
+
+            jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.ELIMINAR, idMaterial);
+            form.setVisible(true);
+
+            // cargarTablaMateriales();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un material de la tabla para eliminar.");
+        }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void pnBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMouseDragged
@@ -239,6 +255,18 @@ public class jdMateriales extends javax.swing.JDialog {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
+        int filaSeleccionada = tblMaterial.getSelectedRow(); // Reemplaza 'tablaMateriales' con el nombre real de tu JTable
+
+        if (filaSeleccionada != -1) {
+            int idMaterial = Integer.parseInt(tblMaterial.getValueAt(filaSeleccionada, 0).toString());
+
+            jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.EDITAR, idMaterial);
+            form.setVisible(true);
+
+            // cargarTablaMateriales();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un material de la tabla para editar.");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseEntered

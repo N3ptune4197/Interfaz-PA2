@@ -22,6 +22,7 @@ public class jdInicioASesion extends javax.swing.JDialog {
     public jdInicioASesion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
         setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
     }
 
