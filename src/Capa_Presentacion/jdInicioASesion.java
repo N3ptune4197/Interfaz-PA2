@@ -22,6 +22,7 @@ public class jdInicioASesion extends javax.swing.JDialog {
     public jdInicioASesion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
     }
 
     /**
@@ -39,16 +40,16 @@ public class jdInicioASesion extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         pnCabeza = new javax.swing.JPanel();
+        btnCerrar = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         txtPasword = new javax.swing.JPasswordField();
-        EntrarBtn = new javax.swing.JPanel();
-        lblEntrar = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLocationByPlatform(true);
+        setUndecorated(true);
         setResizable(false);
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
@@ -82,15 +83,36 @@ public class jdInicioASesion extends javax.swing.JDialog {
             }
         });
 
+        btnCerrar.setFont(new java.awt.Font("Roboto Light", 0, 20)); // NOI18N
+        btnCerrar.setText("X");
+        btnCerrar.setBorder(null);
+        btnCerrar.setContentAreaFilled(false);
+        btnCerrar.setFocusPainted(false);
+        btnCerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCerrar.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseExited(evt);
+            }
+        });
+        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
+
         javax.swing.GroupLayout pnCabezaLayout = new javax.swing.GroupLayout(pnCabeza);
         pnCabeza.setLayout(pnCabezaLayout);
         pnCabezaLayout.setHorizontalGroup(
             pnCabezaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnCabezaLayout.createSequentialGroup()
+                .addGap(0, 714, Short.MAX_VALUE)
+                .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnCabezaLayout.setVerticalGroup(
             pnCabezaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnCabezaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         bg.add(pnCabeza, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 30));
@@ -128,40 +150,17 @@ public class jdInicioASesion extends javax.swing.JDialog {
         });
         bg.add(txtPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 270, 350, 30));
 
-        EntrarBtn.setBackground(new java.awt.Color(232, 108, 54));
-
-        lblEntrar.setFont(new java.awt.Font("Varsity Regular", 0, 18)); // NOI18N
-        lblEntrar.setForeground(new java.awt.Color(255, 255, 255));
-        lblEntrar.setText("          entrar");
-        lblEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblEntrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblEntrarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblEntrarMouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout EntrarBtnLayout = new javax.swing.GroupLayout(EntrarBtn);
-        EntrarBtn.setLayout(EntrarBtnLayout);
-        EntrarBtnLayout.setHorizontalGroup(
-            EntrarBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-        );
-        EntrarBtnLayout.setVerticalGroup(
-            EntrarBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblEntrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-        );
-
-        bg.add(EntrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 160, 50));
+        jButton1.setBackground(new java.awt.Color(232, 108, 54));
+        jButton1.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("ENTRAR");
+        bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 333, 140, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, 755, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,16 +182,6 @@ public class jdInicioASesion extends javax.swing.JDialog {
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_pnCabezaMouseDragged
-
-    private void lblEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEntrarMouseEntered
-        // TODO add your handling code here:
-        EntrarBtn.setBackground(new Color(201, 94, 47));
-    }//GEN-LAST:event_lblEntrarMouseEntered
-
-    private void lblEntrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEntrarMouseExited
-        // TODO add your handling code here:
-        EntrarBtn.setBackground(new Color(232, 108, 54));
-    }//GEN-LAST:event_lblEntrarMouseExited
 
     private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
         // TODO add your handling code here:}
@@ -220,46 +209,29 @@ public class jdInicioASesion extends javax.swing.JDialog {
 
     }//GEN-LAST:event_txtPaswordMousePressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(true);
+        btnCerrar.setBackground(Color.RED);
+        btnCerrar.setForeground(Color.WHITE);
+    }//GEN-LAST:event_btnCerrarMouseEntered
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                jdInicioASesion dialog = new jdInicioASesion(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    private void btnCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseExited
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(false);
+        btnCerrar.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btnCerrarMouseExited
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel EntrarBtn;
     private javax.swing.JPanel bg;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -267,7 +239,6 @@ public class jdInicioASesion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel lblEntrar;
     private javax.swing.JPanel pnCabeza;
     private javax.swing.JPasswordField txtPasword;
     private javax.swing.JTextField txtUsuario;
