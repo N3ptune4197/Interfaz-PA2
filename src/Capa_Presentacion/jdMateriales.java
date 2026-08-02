@@ -4,12 +4,21 @@
  */
 package capa_presentacion;
 
+import Capa_Presentacion.jdFuncionesMaterial;
+import capa_datos.MaterialDAO;
+import capa_logica.Material;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author JIMMYSIN
  */
 public class jdMateriales extends javax.swing.JDialog {
-    
+
+    int xMouse, yMouse;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdMateriales.class.getName());
 
     /**
@@ -18,6 +27,9 @@ public class jdMateriales extends javax.swing.JDialog {
     public jdMateriales(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
+        cargarTablaMateriales();
+
     }
 
     /**
@@ -29,22 +41,316 @@ public class jdMateriales extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bg = new javax.swing.JPanel();
+        lblTitulo = new javax.swing.JLabel();
+        btnCerrar = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        pnBarra = new javax.swing.JPanel();
+        lblMarDer = new javax.swing.JLabel();
+        lblMarIzq = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMaterial = new javax.swing.JTable();
+        btnEditar = new javax.swing.JButton();
+        lblAbajoIzq = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
+
+        bg.setBackground(new java.awt.Color(255, 255, 255));
+        bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(232, 108, 54));
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/archivero-removebg-preview.png"))); // NOI18N
+        lblTitulo.setText("GESTIÓN DE MATERIALES");
+        lblTitulo.setIconTextGap(10);
+        bg.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 470, -1));
+
+        btnCerrar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnCerrar.setForeground(new java.awt.Color(232, 108, 54));
+        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cerrar.png"))); // NOI18N
+        btnCerrar.setText("| Cerrar");
+        btnCerrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnCerrar.setContentAreaFilled(false);
+        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrar.setHideActionText(true);
+        btnCerrar.setIconTextGap(15);
+        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseExited(evt);
+            }
+        });
+        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
+        bg.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 420, 120, 40));
+
+        btnAgregar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnAgregar.setForeground(new java.awt.Color(232, 108, 54));
+        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/agregar.png"))); // NOI18N
+        btnAgregar.setText("| Agregar");
+        btnAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnAgregar.setContentAreaFilled(false);
+        btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregar.setFocusPainted(false);
+        btnAgregar.setHideActionText(true);
+        btnAgregar.setIconTextGap(15);
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseExited(evt);
+            }
+        });
+        btnAgregar.addActionListener(this::btnAgregarActionPerformed);
+        bg.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, 140, -1));
+
+        btnEliminar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(232, 108, 54));
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/eliminar.png"))); // NOI18N
+        btnEliminar.setText("| Eliminar");
+        btnEliminar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnEliminar.setContentAreaFilled(false);
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminar.setHideActionText(true);
+        btnEliminar.setIconTextGap(15);
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseExited(evt);
+            }
+        });
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+        bg.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 420, 140, 40));
+
+        pnBarra.setBackground(new java.awt.Color(255, 255, 255));
+        pnBarra.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnBarraMouseDragged(evt);
+            }
+        });
+        pnBarra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnBarraMousePressed(evt);
+            }
+        });
+
+        lblMarDer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/orange-corner-corner-design-element-free-png.png"))); // NOI18N
+
+        lblMarIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/marco_arriba_izq.png"))); // NOI18N
+
+        javax.swing.GroupLayout pnBarraLayout = new javax.swing.GroupLayout(pnBarra);
+        pnBarra.setLayout(pnBarraLayout);
+        pnBarraLayout.setHorizontalGroup(
+            pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBarraLayout.createSequentialGroup()
+                .addComponent(lblMarIzq, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 624, Short.MAX_VALUE)
+                .addComponent(lblMarDer))
+        );
+        pnBarraLayout.setVerticalGroup(
+            pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBarraLayout.createSequentialGroup()
+                .addGap(0, 2, Short.MAX_VALUE)
+                .addGroup(pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMarIzq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblMarDer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        bg.add(pnBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 810, 60));
+
+        tblMaterial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nombre", "Descripción", "Precio", "Stock", "Vigencia", "Categoría", "Marca"
+            }
+        ));
+        jScrollPane1.setViewportView(tblMaterial);
+
+        bg.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 770, 320));
+
+        btnEditar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(232, 108, 54));
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/editar.png"))); // NOI18N
+        btnEditar.setText("| Editar");
+        btnEditar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnEditar.setContentAreaFilled(false);
+        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditar.setHideActionText(true);
+        btnEditar.setIconTextGap(15);
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditarMouseExited(evt);
+            }
+        });
+        btnEditar.addActionListener(this::btnEditarActionPerformed);
+        bg.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 140, -1));
+
+        lblAbajoIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/marco_abajo.png"))); // NOI18N
+        bg.add(lblAbajoIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/marco_abajo_der.png"))); // NOI18N
+        bg.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 460, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.AGREGAR, null);
+        form.setVisible(true);
+        cargarTablaMateriales();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tblMaterial.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            String idMaterial = tblMaterial.getValueAt(filaSeleccionada, 0).toString();
+
+            jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.ELIMINAR, idMaterial);
+            form.setVisible(true);
+
+            cargarTablaMateriales();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un material de la tabla para eliminar.");
+        }
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void pnBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMouseDragged
+        // TODO add your handling code here:
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_pnBarraMouseDragged
+
+    private void pnBarraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMousePressed
+        // TODO add your handling code here:
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_pnBarraMousePressed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = tblMaterial.getSelectedRow(); // Reemplaza 'tablaMateriales' con el nombre real de tu JTable
+
+        if (filaSeleccionada != -1) {
+            String idMaterial = tblMaterial.getValueAt(filaSeleccionada, 0).toString();
+
+            jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.EDITAR, idMaterial);
+            form.setVisible(true);
+
+            cargarTablaMateriales();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un material de la tabla para editar.");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseEntered
+        // TODO add your handling code here:
+        btnAgregar.setContentAreaFilled(true);
+        btnAgregar.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnAgregarMouseEntered
+
+    private void btnAgregarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseExited
+        // TODO add your handling code here:
+        btnAgregar.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnAgregarMouseExited
+
+    private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
+        // TODO add your handling code here:
+        btnEditar.setContentAreaFilled(true);
+        btnEditar.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnEditarMouseEntered
+
+    private void btnEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseExited
+        // TODO add your handling code here:
+        btnEditar.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnEditarMouseExited
+
+    private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
+        // TODO add your handling code here:
+        btnEliminar.setContentAreaFilled(true);
+        btnEliminar.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnEliminarMouseEntered
+
+    private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
+        // TODO add your handling code here:
+        btnEliminar.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnEliminarMouseExited
+
+    private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(true);
+        btnCerrar.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnCerrarMouseEntered
+
+    private void btnCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseExited
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnCerrarMouseExited
+
+    private void cargarTablaMateriales() {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblMaterial.getModel();
+            modelo.setRowCount(0);
+            ArrayList<Material> lista = MaterialDAO.consultarTodos();
+            for (Material m : lista) {
+                Object[] fila = {
+                    m.getCodigo(), m.getNombre(), m.getDescripcion(),
+                    m.getPrecio(), m.getStock(),
+                    m.isVigencia() ? "Vigente" : "No vigente",
+                    m.getCategoria(), m.getMarca()
+                };
+                modelo.addRow(fila);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar materiales: " + ex.getMessage());
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bg;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAbajoIzq;
+    private javax.swing.JLabel lblMarDer;
+    private javax.swing.JLabel lblMarIzq;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel pnBarra;
+    private javax.swing.JTable tblMaterial;
     // End of variables declaration//GEN-END:variables
 }

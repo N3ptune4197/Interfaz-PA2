@@ -76,7 +76,7 @@ public class Pedido implements Serializable {
         if (material == null)
             return 0;
 
-        return cantidad * material.getCosto();
+        return cantidad * material.getPrecio();
 
     }
 

@@ -8,29 +8,33 @@ public class Material implements Serializable {
 
     private String codigo;
     private String nombre;
-    private String categoria;
-    private String unidadMedida;
-    private float costo;
+    private String descripcion;
+    private float precio;
     private int stock;
+    private String categoria;
+    private String marca;
+    private boolean vigencia;
 
     public Material() {
         codigo = "";
         nombre = "";
-        categoria = "";
-        unidadMedida = "";
-        costo = 0;
+        descripcion = "";
+        precio = 0;
         stock = 0;
+        categoria = "";
+        marca = "";
+        vigencia = false;
     }
 
-    public Material(String codigo, String nombre, String categoria,
-            String unidadMedida, float costo, int stock) {
-
+    public Material(String codigo, String nombre, String descripcion, float precio, int stock, String categoria, String marca, boolean vigencia) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.categoria = categoria;
-        this.unidadMedida = unidadMedida;
-        this.costo = costo;
+        this.descripcion = descripcion;
+        this.precio = precio;
         this.stock = stock;
+        this.categoria = categoria;
+        this.marca = marca;
+        this.vigencia = vigencia;
     }
 
     public String getCodigo() {
@@ -49,28 +53,20 @@ public class Material implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getUnidadMedida() {
-        return unidadMedida;
+    public float getPrecio() {
+        return precio;
     }
 
-    public void setUnidadMedida(String unidadMedida) {
-        this.unidadMedida = unidadMedida;
-    }
-
-    public float getCosto() {
-        return costo;
-    }
-
-    public void setCosto(float costo) {
-        this.costo = costo;
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 
     public int getStock() {
@@ -79,6 +75,30 @@ public class Material implements Serializable {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public boolean isVigencia() {
+        return vigencia;
+    }
+
+    public void setVigencia(boolean vigencia) {
+        this.vigencia = vigencia;
     }
 
     @Override

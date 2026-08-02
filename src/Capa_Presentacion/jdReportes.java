@@ -4,12 +4,15 @@
  */
 package capa_presentacion;
 
+import java.awt.Color;
+
 /**
  *
  * @author JIMMYSIN
  */
 public class jdReportes extends javax.swing.JDialog {
     
+    int xMouse, yMouse;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdReportes.class.getName());
 
     /**
@@ -18,6 +21,7 @@ public class jdReportes extends javax.swing.JDialog {
     public jdReportes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
     }
 
     /**
@@ -29,22 +33,336 @@ public class jdReportes extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        lblTitulo = new javax.swing.JLabel();
+        btnLimpiar = new javax.swing.JButton();
+        btnPedidos = new javax.swing.JButton();
+        btnTotalGastado = new javax.swing.JButton();
+        pnBarra = new javax.swing.JPanel();
+        lblMarDer = new javax.swing.JLabel();
+        lblMarIzq = new javax.swing.JLabel();
+        btnMateriales = new javax.swing.JButton();
+        lblAbajoIzq = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        btnStock = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        btnCerrar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(232, 108, 54));
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/informes-removebg-preview.png"))); // NOI18N
+        lblTitulo.setText("REPORTES");
+        lblTitulo.setIconTextGap(10);
+        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 470, -1));
+
+        btnLimpiar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(232, 108, 54));
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/limpiar.png"))); // NOI18N
+        btnLimpiar.setText("| Limpiar");
+        btnLimpiar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnLimpiar.setContentAreaFilled(false);
+        btnLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiar.setHideActionText(true);
+        btnLimpiar.setIconTextGap(25);
+        btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLimpiarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLimpiarMouseExited(evt);
+            }
+        });
+        btnLimpiar.addActionListener(this::btnLimpiarActionPerformed);
+        jPanel1.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 370, 150, 40));
+
+        btnPedidos.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnPedidos.setForeground(new java.awt.Color(232, 108, 54));
+        btnPedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pedido.png"))); // NOI18N
+        btnPedidos.setText("| Ver Pedidos");
+        btnPedidos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnPedidos.setContentAreaFilled(false);
+        btnPedidos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPedidos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnPedidos.setIconTextGap(25);
+        btnPedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPedidosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnPedidosMouseExited(evt);
+            }
+        });
+        btnPedidos.addActionListener(this::btnPedidosActionPerformed);
+        jPanel1.add(btnPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 200, 40));
+
+        btnTotalGastado.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnTotalGastado.setForeground(new java.awt.Color(232, 108, 54));
+        btnTotalGastado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pngtree-dollar-flat-orange-color-rounded-vector-icon-income-business-cash-vector-picture-image_9721223.png"))); // NOI18N
+        btnTotalGastado.setText("| Total Gastado");
+        btnTotalGastado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnTotalGastado.setContentAreaFilled(false);
+        btnTotalGastado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTotalGastado.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnTotalGastado.setIconTextGap(25);
+        btnTotalGastado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTotalGastadoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnTotalGastadoMouseExited(evt);
+            }
+        });
+        btnTotalGastado.addActionListener(this::btnTotalGastadoActionPerformed);
+        jPanel1.add(btnTotalGastado, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 200, 40));
+
+        pnBarra.setBackground(new java.awt.Color(255, 255, 255));
+        pnBarra.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnBarraMouseDragged(evt);
+            }
+        });
+        pnBarra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnBarraMousePressed(evt);
+            }
+        });
+
+        lblMarDer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/orange-corner-corner-design-element-free-png.png"))); // NOI18N
+
+        lblMarIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/marco_arriba_izq.png"))); // NOI18N
+
+        javax.swing.GroupLayout pnBarraLayout = new javax.swing.GroupLayout(pnBarra);
+        pnBarra.setLayout(pnBarraLayout);
+        pnBarraLayout.setHorizontalGroup(
+            pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBarraLayout.createSequentialGroup()
+                .addComponent(lblMarIzq, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 624, Short.MAX_VALUE)
+                .addComponent(lblMarDer))
+        );
+        pnBarraLayout.setVerticalGroup(
+            pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBarraLayout.createSequentialGroup()
+                .addGap(0, 2, Short.MAX_VALUE)
+                .addGroup(pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMarIzq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblMarDer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        jPanel1.add(pnBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 810, 60));
+
+        btnMateriales.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnMateriales.setForeground(new java.awt.Color(232, 108, 54));
+        btnMateriales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/material.png"))); // NOI18N
+        btnMateriales.setText("| Materiales");
+        btnMateriales.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnMateriales.setContentAreaFilled(false);
+        btnMateriales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMateriales.setIconTextGap(25);
+        btnMateriales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMaterialesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMaterialesMouseExited(evt);
+            }
+        });
+        btnMateriales.addActionListener(this::btnMaterialesActionPerformed);
+        jPanel1.add(btnMateriales, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, 200, 40));
+
+        lblAbajoIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/marco_abajo.png"))); // NOI18N
+        jPanel1.add(lblAbajoIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/marco_abajo_der.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 460, 90, -1));
+
+        btnStock.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnStock.setForeground(new java.awt.Color(232, 108, 54));
+        btnStock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/stock.png"))); // NOI18N
+        btnStock.setText("| Ver Stock");
+        btnStock.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnStock.setContentAreaFilled(false);
+        btnStock.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnStock.setIconTextGap(25);
+        btnStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnStockMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnStockMouseExited(evt);
+            }
+        });
+        btnStock.addActionListener(this::btnStockActionPerformed);
+        jPanel1.add(btnStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 200, 40));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 770, 270));
+
+        btnCerrar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnCerrar.setForeground(new java.awt.Color(232, 108, 54));
+        btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cerrar.png"))); // NOI18N
+        btnCerrar.setText("| Cerrar");
+        btnCerrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnCerrar.setContentAreaFilled(false);
+        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrar.setHideActionText(true);
+        btnCerrar.setIconTextGap(25);
+        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseExited(evt);
+            }
+        });
+        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
+        jPanel1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 430, 150, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPedidosActionPerformed
+
+    private void btnTotalGastadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalGastadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTotalGastadoActionPerformed
+
+    private void pnBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMouseDragged
+        // TODO add your handling code here:
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_pnBarraMouseDragged
+
+    private void pnBarraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMousePressed
+        // TODO add your handling code here:
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_pnBarraMousePressed
+
+    private void btnMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaterialesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMaterialesActionPerformed
+
+    private void btnStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnStockActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStockMouseEntered
+        // TODO add your handling code here:
+        btnStock.setContentAreaFilled(true);
+        btnStock.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnStockMouseEntered
+
+    private void btnPedidosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPedidosMouseEntered
+        // TODO add your handling code here:
+        btnPedidos.setContentAreaFilled(true);
+        btnPedidos.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnPedidosMouseEntered
+
+    private void btnTotalGastadoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTotalGastadoMouseEntered
+        // TODO add your handling code here:
+        btnTotalGastado.setContentAreaFilled(true);
+        btnTotalGastado.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnTotalGastadoMouseEntered
+
+    private void btnMaterialesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaterialesMouseEntered
+        // TODO add your handling code here:
+        btnMateriales.setContentAreaFilled(true);
+        btnMateriales.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnMaterialesMouseEntered
+
+    private void btnLimpiarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseEntered
+        // TODO add your handling code here:
+        btnLimpiar.setContentAreaFilled(true);
+        btnLimpiar.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnLimpiarMouseEntered
+
+    private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(true);
+        btnCerrar.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnCerrarMouseEntered
+
+    private void btnStockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStockMouseExited
+        // TODO add your handling code here:
+        btnStock.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnStockMouseExited
+
+    private void btnPedidosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPedidosMouseExited
+        // TODO add your handling code here:
+        btnPedidos.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnPedidosMouseExited
+
+    private void btnTotalGastadoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTotalGastadoMouseExited
+        // TODO add your handling code here:
+        btnTotalGastado.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnTotalGastadoMouseExited
+
+    private void btnMaterialesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMaterialesMouseExited
+        // TODO add your handling code here:
+        btnMateriales.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnMaterialesMouseExited
+
+    private void btnLimpiarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseExited
+        // TODO add your handling code here:
+        btnLimpiar.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnLimpiarMouseExited
+
+    private void btnCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseExited
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnCerrarMouseExited
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnMateriales;
+    private javax.swing.JButton btnPedidos;
+    private javax.swing.JButton btnStock;
+    private javax.swing.JButton btnTotalGastado;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lblAbajoIzq;
+    private javax.swing.JLabel lblMarDer;
+    private javax.swing.JLabel lblMarIzq;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel pnBarra;
     // End of variables declaration//GEN-END:variables
 }

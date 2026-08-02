@@ -4,11 +4,16 @@
  */
 package capa_presentacion;
 
+import java.awt.Color;
+import javax.swing.BorderFactory;
+
 /**
  *
  * @author JIMMYSIN
  */
 public class frmMenu extends javax.swing.JFrame {
+    
+    int xMouse, yMouse;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmMenu.class.getName());
 
@@ -17,9 +22,10 @@ public class frmMenu extends javax.swing.JFrame {
      */
     public frmMenu() {
         initComponents();
-        jdInicioASesion objInicio = new jdInicioASesion(this, true);
+        jdInicioSesion objInicio = new jdInicioSesion(this, true);
         objInicio.setLocationRelativeTo(objInicio);
         objInicio.setVisible(true);
+        setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
     }
 
     /**
@@ -32,63 +38,133 @@ public class frmMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         bg = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblDeco = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         btnReportes = new javax.swing.JButton();
-        btnGestionarMat1 = new javax.swing.JButton();
+        btnGestionarMat = new javax.swing.JButton();
         btnGestionarProy = new javax.swing.JButton();
+        btnMinimizar = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
+        pnBarra = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/orange-frame-frame-design-element-free-png.png"))); // NOI18N
-        bg.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 500));
+        lblDeco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/marco.png"))); // NOI18N
+        bg.add(lblDeco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 500));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ef0d225b-a049-44d5-ac12-b94d295eb503.png"))); // NOI18N
-        bg.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, -1, 160));
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ef0d225b-a049-44d5-ac12-b94d295eb503.png"))); // NOI18N
+        bg.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 160, 150));
 
-        jLabel3.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 153, 51));
-        jLabel3.setText("SISTEMA DE CONSTRUCCIÓN");
-        bg.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, -1, -1));
+        lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(232, 108, 54));
+        lblTitulo.setText("SISTEMA DE CONSTRUCCIÓN");
+        bg.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, -1, -1));
 
         btnReportes.setBackground(new java.awt.Color(153, 153, 153));
         btnReportes.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/informes-removebg-preview.png"))); // NOI18N
         btnReportes.setText("| Reportes");
+        btnReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReportes.setHideActionText(true);
         btnReportes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnReportes.setIconTextGap(20);
-        bg.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 300, -1));
+        btnReportes.addActionListener(this::btnReportesActionPerformed);
+        bg.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 410, 300, -1));
 
-        btnGestionarMat1.setBackground(new java.awt.Color(153, 153, 153));
-        btnGestionarMat1.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
-        btnGestionarMat1.setForeground(new java.awt.Color(255, 255, 255));
-        btnGestionarMat1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/archivero-removebg-preview.png"))); // NOI18N
-        btnGestionarMat1.setText("| Gestionar Materiales");
-        btnGestionarMat1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnGestionarMat1.setIconTextGap(20);
-        btnGestionarMat1.addActionListener(this::btnGestionarMat1ActionPerformed);
-        bg.add(btnGestionarMat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 300, -1));
+        btnGestionarMat.setBackground(new java.awt.Color(153, 153, 153));
+        btnGestionarMat.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnGestionarMat.setForeground(new java.awt.Color(255, 255, 255));
+        btnGestionarMat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/archivero-removebg-preview.png"))); // NOI18N
+        btnGestionarMat.setText("| Gestionar Materiales");
+        btnGestionarMat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGestionarMat.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnGestionarMat.setIconTextGap(20);
+        btnGestionarMat.addActionListener(this::btnGestionarMatActionPerformed);
+        bg.add(btnGestionarMat, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 300, -1));
 
         btnGestionarProy.setBackground(new java.awt.Color(153, 153, 153));
         btnGestionarProy.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
         btnGestionarProy.setForeground(new java.awt.Color(255, 255, 255));
         btnGestionarProy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/proyecto-removebg-preview.png"))); // NOI18N
         btnGestionarProy.setText("| Gestionar Proyectos");
+        btnGestionarProy.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionarProy.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnGestionarProy.setIconTextGap(20);
-        bg.add(btnGestionarProy, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 310, 300, -1));
+        btnGestionarProy.addActionListener(this::btnGestionarProyActionPerformed);
+        bg.add(btnGestionarProy, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 330, 300, -1));
+
+        btnMinimizar.setFont(new java.awt.Font("Roboto Light", 0, 20)); // NOI18N
+        btnMinimizar.setText("—");
+        btnMinimizar.setBorder(null);
+        btnMinimizar.setContentAreaFilled(false);
+        btnMinimizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnMinimizar.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMinimizarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMinimizarMouseExited(evt);
+            }
+        });
+        btnMinimizar.addActionListener(this::btnMinimizarActionPerformed);
+        bg.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 0, -1, 30));
+
+        btnCerrar.setFont(new java.awt.Font("Roboto Light", 0, 20)); // NOI18N
+        btnCerrar.setText("X");
+        btnCerrar.setBorder(null);
+        btnCerrar.setContentAreaFilled(false);
+        btnCerrar.setFocusPainted(false);
+        btnCerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCerrar.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseExited(evt);
+            }
+        });
+        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
+        bg.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, -1, 30));
+
+        pnBarra.setBackground(new java.awt.Color(255, 255, 255));
+        pnBarra.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnBarraMouseDragged(evt);
+            }
+        });
+        pnBarra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnBarraMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnBarraLayout = new javax.swing.GroupLayout(pnBarra);
+        pnBarra.setLayout(pnBarraLayout);
+        pnBarraLayout.setHorizontalGroup(
+            pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 810, Short.MAX_VALUE)
+        );
+        pnBarraLayout.setVerticalGroup(
+            pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        bg.add(pnBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,18 +174,87 @@ public class frmMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGestionarMat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarMat1ActionPerformed
+    private void btnGestionarMatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarMatActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnGestionarMat1ActionPerformed
+        jdMateriales objForm = new jdMateriales(this, true);
+        objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true);
+    }//GEN-LAST:event_btnGestionarMatActionPerformed
+
+    private void btnMinimizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizarActionPerformed
+        // TODO add your handling code here:
+         this.setState(frmMenu.ICONIFIED);
+    }//GEN-LAST:event_btnMinimizarActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(true);
+        btnCerrar.setBackground(Color.RED);
+        btnCerrar.setForeground(Color.WHITE);
+    }//GEN-LAST:event_btnCerrarMouseEntered
+
+    private void btnCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseExited
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(false);
+        btnCerrar.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btnCerrarMouseExited
+
+    private void btnMinimizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseEntered
+        // TODO add your handling code here:
+        btnMinimizar.setContentAreaFilled(true);
+        btnMinimizar.setBackground(Color.RED);
+        btnMinimizar.setForeground(Color.WHITE);
+    }//GEN-LAST:event_btnMinimizarMouseEntered
+
+    private void btnMinimizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseExited
+        // TODO add your handling code here:
+        btnMinimizar.setContentAreaFilled(false);
+        btnMinimizar.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btnMinimizarMouseExited
+
+    private void pnBarraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMousePressed
+        // TODO add your handling code here:
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_pnBarraMousePressed
+
+    private void pnBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMouseDragged
+        // TODO add your handling code here:
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_pnBarraMouseDragged
+
+    private void btnGestionarProyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarProyActionPerformed
+        // TODO add your handling code here:
+        jdProyectos objForm = new jdProyectos(this, true);
+        objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true);
+    }//GEN-LAST:event_btnGestionarProyActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        // TODO add your handling code here:
+        jdReportes objForm = new jdReportes(this, true);
+        objForm.setLocationRelativeTo(this);
+        objForm.setVisible(true);
+    }//GEN-LAST:event_btnReportesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
-    private javax.swing.JButton btnGestionarMat1;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnGestionarMat;
     private javax.swing.JButton btnGestionarProy;
+    private javax.swing.JButton btnMinimizar;
     private javax.swing.JButton btnReportes;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblDeco;
+    private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel pnBarra;
     // End of variables declaration//GEN-END:variables
 }
