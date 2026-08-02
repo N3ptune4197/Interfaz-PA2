@@ -5,8 +5,12 @@
 package capa_presentacion;
 
 import Capa_Presentacion.jdFuncionesMaterial;
+import capa_datos.MaterialDAO;
+import capa_logica.Material;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +28,8 @@ public class jdMateriales extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
+        cargarTablaMateriales();
+
     }
 
     /**
@@ -166,7 +172,7 @@ public class jdMateriales extends javax.swing.JDialog {
 
             },
             new String [] {
-
+                "Código", "Nombre", "Descripción", "Precio", "Stock", "Vigencia", "Categoría", "Marca"
             }
         ));
         jScrollPane1.setViewportView(tblMaterial);
@@ -220,20 +226,21 @@ public class jdMateriales extends javax.swing.JDialog {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.AGREGAR, 0);
+        jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.AGREGAR, null);
         form.setVisible(true);
+        cargarTablaMateriales();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         int filaSeleccionada = tblMaterial.getSelectedRow();
         if (filaSeleccionada != -1) {
-            int idMaterial = Integer.parseInt(tblMaterial.getValueAt(filaSeleccionada, 0).toString());
+            String idMaterial = tblMaterial.getValueAt(filaSeleccionada, 0).toString();
 
             jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.ELIMINAR, idMaterial);
             form.setVisible(true);
 
-            // cargarTablaMateriales();
+            cargarTablaMateriales();
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un material de la tabla para eliminar.");
         }
@@ -258,12 +265,12 @@ public class jdMateriales extends javax.swing.JDialog {
         int filaSeleccionada = tblMaterial.getSelectedRow(); // Reemplaza 'tablaMateriales' con el nombre real de tu JTable
 
         if (filaSeleccionada != -1) {
-            int idMaterial = Integer.parseInt(tblMaterial.getValueAt(filaSeleccionada, 0).toString());
+            String idMaterial = tblMaterial.getValueAt(filaSeleccionada, 0).toString();
 
             jdFuncionesMaterial form = new jdFuncionesMaterial(null, true, jdFuncionesMaterial.Modo.EDITAR, idMaterial);
             form.setVisible(true);
 
-            // cargarTablaMateriales();
+            cargarTablaMateriales();
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un material de la tabla para editar.");
         }
@@ -313,6 +320,24 @@ public class jdMateriales extends javax.swing.JDialog {
         btnCerrar.setContentAreaFilled(false);
     }//GEN-LAST:event_btnCerrarMouseExited
 
+    private void cargarTablaMateriales() {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblMaterial.getModel();
+            modelo.setRowCount(0);
+            ArrayList<Material> lista = MaterialDAO.consultarTodos();
+            for (Material m : lista) {
+                Object[] fila = {
+                    m.getCodigo(), m.getNombre(), m.getDescripcion(),
+                    m.getPrecio(), m.getStock(),
+                    m.isVigencia() ? "Vigente" : "No vigente",
+                    m.getCategoria(), m.getMarca()
+                };
+                modelo.addRow(fila);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar materiales: " + ex.getMessage());
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnAgregar;

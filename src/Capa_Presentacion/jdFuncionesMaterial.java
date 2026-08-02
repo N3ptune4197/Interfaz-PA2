@@ -7,6 +7,8 @@ package Capa_Presentacion;
 import Componentes.UtilidadFuentes;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import capa_datos.MaterialDAO;
+import capa_logica.Material;
 
 /**
  *
@@ -21,15 +23,17 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         AGREGAR, EDITAR, ELIMINAR
     }
     private Modo modoActual;
-    private int idMaterialSeleccionado; // Para saber qué registro editar/eliminar
+    private String idMaterialSeleccionado; // Para saber qué registro editar/eliminar
 
     /**
      * Creates new form jdFuncionesMaterial
      */
-    public jdFuncionesMaterial(java.awt.Frame parent, boolean modal, Modo modo, int idMaterial) {
+    public jdFuncionesMaterial(java.awt.Frame parent, boolean modal, Modo modo, String idMaterial) {
         super(parent, modal);
         initComponents();
 
+        // Spinner: valor inicial 0, mínimo 0, sin máximo, incrementos de 1
+        spnStock.setModel(new javax.swing.SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         // Redondear los bordes del panel contenedor principal con FlatLaf
         // <-- Agregamos la llamada aquí
         jLabel1.setFont(UtilidadFuentes.cargarFuenteVarsity(28f));
@@ -106,7 +110,8 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
 
         chkVigencia.setText("(Vigente)");
 
-        cboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidad", "Millar", "Metro", "Metro cuadrado", "Metro Cúbico", "Bolsa", "Varillas" }));
+        cboCategoria.addActionListener(this::cboCategoriaActionPerformed);
 
         cboMarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -275,27 +280,71 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         // Dependiendo del modo actual, ejecutamos la acción correspondiente
         switch (modoActual) {
             case AGREGAR:
-                // TODO: Aquí llamas a tu método de la capa lógica para insertar
-                // Ejemplo: objetoLogica.insertar(txtNombre.getText(), ...);
-                JOptionPane.showMessageDialog(this, "Material registrado exitosamente.");
+                if (!validarCampos()) {
+                    return;
+                }
+                try {
+                    String codigo = txtCodigo.getText().trim();
+                    if (MaterialDAO.consultarPorCodigo(codigo) != null) {
+                        JOptionPane.showMessageDialog(this, "Ya existe un material con ese código.");
+                        return;
+                    }
+                    Material nuevo = new Material(
+                            codigo, txtNombre.getText().trim(), txtDescripcion.getText().trim(),
+                            Float.parseFloat(txtPrecio.getText().trim()), (int) spnStock.getValue(),
+                            cboCategoria.getSelectedItem().toString(), cboMarca.getSelectedItem().toString(),
+                            chkVigencia.isSelected()
+                    );
+                    MaterialDAO.agregar(nuevo);
+                    JOptionPane.showMessageDialog(this, "Material registrado exitosamente.");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error al registrar: " + ex.getMessage());
+                    return;
+                }
                 break;
 
             case EDITAR:
-                // TODO: Aquí llamas a tu método para actualizar usando el idMaterialSeleccionado
-                // Ejemplo: objetoLogica.actualizar(idMaterialSeleccionado, txtNombre.getText(), ...);
-                JOptionPane.showMessageDialog(this, "Material actualizado exitosamente.");
+                if (!validarCampos()) {
+                    return;
+                }
+                try {
+                    Material actualizado = new Material(
+                            idMaterialSeleccionado, txtNombre.getText().trim(), txtDescripcion.getText().trim(),
+                            Float.parseFloat(txtPrecio.getText().trim()), (int) spnStock.getValue(),
+                            cboCategoria.getSelectedItem().toString(), cboMarca.getSelectedItem().toString(),
+                            chkVigencia.isSelected()
+                    );
+                    MaterialDAO.modificar(actualizado);
+                    JOptionPane.showMessageDialog(this, "Material actualizado exitosamente.");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error al actualizar: " + ex.getMessage());
+                    return;
+                }
                 break;
 
             case ELIMINAR:
-                // TODO: Aquí llamas a tu método para eliminar o dar de baja
-                // Ejemplo: objetoLogica.eliminar(idMaterialSeleccionado);
-                JOptionPane.showMessageDialog(this, "Material eliminado exitosamente.");
+                try {
+                    int confirmar = JOptionPane.showConfirmDialog(this,
+                            "¿Está seguro de eliminar el material \"" + txtNombre.getText() + "\"?",
+                            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirmar != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+
+                    MaterialDAO.borrar(idMaterialSeleccionado);
+                    JOptionPane.showMessageDialog(this, "Material eliminado exitosamente.");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
+                    return;
+                }
                 break;
         }
-
-        // Cierra la ventana emergente después de realizar la acción
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void cboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -308,12 +357,14 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                 // o cámbialo por el nombre real de tu botón de acción principal.
                 btnGuardar.setText("GUARDAR");
                 limpiarCampos();
+                txtCodigo.setEditable(true);
                 break;
 
             case EDITAR:
                 setTitle("Editar Material");
                 btnGuardar.setText("ACTUALIZAR");
                 cargarDatosMaterial(idMaterialSeleccionado);
+                txtCodigo.setEnabled(false); // El codigo no debe cambiar en edicion
                 break;
 
             case ELIMINAR:
@@ -329,22 +380,74 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         txtCodigo.setEnabled(activar);
         txtNombre.setEnabled(activar);
         txtDescripcion.setEnabled(activar);
-
         txtPrecio.setEnabled(activar);
-        // Agrega aquí los demás txt o combo box si los tienes
+        spnStock.setEnabled(activar);
+        chkVigencia.setEnabled(activar);
+        cboCategoria.setEnabled(activar);
+        cboMarca.setEnabled(activar);
+        btnNewCat.setEnabled(activar);
+        btnNewMarca.setEnabled(activar);
     }
 
     private void limpiarCampos() {
         txtCodigo.setText("");
         txtNombre.setText("");
         txtDescripcion.setText("");
-
         txtPrecio.setText("");
+        spnStock.setValue(0);
+        chkVigencia.setSelected(false);
+        if (cboCategoria.getItemCount() > 0) {
+            cboCategoria.setSelectedIndex(0);
+        }
+        if (cboMarca.getItemCount() > 0) {
+            cboMarca.setSelectedIndex(0);
+        }
     }
 
-    private void cargarDatosMaterial(int id) {
-        // Aquí luego pondrás el código que llama a tu capa lógica/base de datos 
-        // para buscar el material por su ID y rellenar los JTextField.
+    private void cargarDatosMaterial(String codigo) {
+        try {
+            Material m = MaterialDAO.consultarPorCodigo(codigo);
+            if (m != null) {
+                txtCodigo.setText(m.getCodigo());
+                txtNombre.setText(m.getNombre());
+                txtDescripcion.setText(m.getDescripcion());
+                txtPrecio.setText(String.valueOf(m.getPrecio()));
+                spnStock.setValue(m.getStock());
+                chkVigencia.setSelected(m.isVigencia());
+                cboCategoria.setSelectedItem(m.getCategoria());
+                cboMarca.setSelectedItem(m.getMarca());
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el material: " + ex.getMessage());
+        }
+    }
+
+    private boolean validarCampos() {
+        if (txtCodigo.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El código es obligatorio.");
+            return false;
+        }
+        if (txtNombre.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El nombre es obligatorio.");
+            return false;
+        }
+        try {
+            float precio = Float.parseFloat(txtPrecio.getText().trim());
+            if (precio < 0) {
+                JOptionPane.showMessageDialog(this, "El precio no puede ser negativo.");
+                return false;
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El precio debe ser un número válido.");
+            return false;
+        }
+
+        int stock = (int) spnStock.getValue();
+        if (stock < 0) {
+            JOptionPane.showMessageDialog(this, "El stock no puede ser negativo.");
+            return false;
+        }
+        return true;
     }
 
     private void aplicarEstiloBordesTecnicos() {
@@ -367,7 +470,6 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         btnNewCat.putClientProperty("FlatLaf.style", estiloBotonNew);
         btnNewMarca.putClientProperty("FlatLaf.style", estiloBotonNew);
 
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

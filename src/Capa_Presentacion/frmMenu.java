@@ -22,7 +22,7 @@ public class frmMenu extends javax.swing.JFrame {
      */
     public frmMenu() {
         initComponents();
-        jdInicioASesion objInicio = new jdInicioASesion(this, true);
+        jdInicioSesion objInicio = new jdInicioSesion(this, true);
         objInicio.setLocationRelativeTo(objInicio);
         objInicio.setVisible(true);
         setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));

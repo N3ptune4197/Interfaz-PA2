@@ -4,25 +4,27 @@
  */
 package capa_presentacion;
 
+import capa_logica.Usuario;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author JIMMYSIN
  */
-public class jdInicioASesion extends javax.swing.JDialog {
+public class jdInicioSesion extends javax.swing.JDialog {
 
     int xMouse, yMouse;
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdInicioASesion.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdInicioSesion.class.getName());
 
     /**
      * Creates new form jdInicioASesion
      */
-    public jdInicioASesion(java.awt.Frame parent, boolean modal) {
+    public jdInicioSesion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
     }
 
@@ -47,7 +49,7 @@ public class jdInicioASesion extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         txtPasword = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        btnIniciarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -151,11 +153,12 @@ public class jdInicioASesion extends javax.swing.JDialog {
         });
         bg.add(txtPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 270, 350, 30));
 
-        jButton1.setBackground(new java.awt.Color(232, 108, 54));
-        jButton1.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("ENTRAR");
-        bg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 333, 140, 40));
+        btnIniciarSesion.setBackground(new java.awt.Color(232, 108, 54));
+        btnIniciarSesion.setFont(new java.awt.Font("Roboto Condensed", 1, 14)); // NOI18N
+        btnIniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        btnIniciarSesion.setText("ENTRAR");
+        btnIniciarSesion.addActionListener(this::btnIniciarSesionActionPerformed);
+        bg.add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 333, 140, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,13 +229,34 @@ public class jdInicioASesion extends javax.swing.JDialog {
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         // TODO add your handling code here:
         this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        // TODO add your handling code here:
+        if (txtUsuario.getText().length() != 0 && txtPasword.getText().length() != 0) {
+            Usuario objUsuario = new Usuario(txtUsuario.getText(), txtPasword.getText());
+            if (objUsuario.IniciarSesion()) {
+                JOptionPane.showMessageDialog(null, "Usuario correcto, accediendo al sistema ....");
+                // Que tenga acceso al sistema
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Credenciales inválidas");
+                txtUsuario.setText("");
+                txtPasword.setText("");
+                txtUsuario.requestFocus();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe ingresarse usuario y contraseña");
+        }
+        
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
