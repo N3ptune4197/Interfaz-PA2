@@ -8,6 +8,8 @@ import capa_logica.Proyecto;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Capa_Presentacion.jdManProyecto;
+import Capa_Presentacion.jdManPedidos;
+
 
 
 import java.awt.Color;
@@ -270,7 +272,25 @@ public class jdProyectos extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
-        // TODO add your handling code here:
+
+        int fila = tblProyectos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione un proyecto.");
+            return;
+        }
+        String codigoProyecto =
+                tblProyectos.getValueAt(fila, 0).toString();
+
+        jdManPedidos frm = new jdManPedidos(
+                (java.awt.Frame) getParent(),
+                true,
+                codigoProyecto);
+
+        frm.setVisible(true);
+
+        listarProyectos();
+
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

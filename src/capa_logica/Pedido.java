@@ -9,6 +9,7 @@ public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String codigo;
+    private Proyecto proyecto;
     private Material material;
     private int cantidad;
     private LocalDate fecha;
@@ -19,16 +20,21 @@ public class Pedido implements Serializable {
     public Pedido() {
 
         codigo = "";
+        proyecto = null;
         material = null;
         cantidad = 0;
         fecha = LocalDate.now();
 
     }
 
-    public Pedido(String codigo, Material material,
-            int cantidad, LocalDate fecha) {
+    public Pedido(String codigo,
+                  Proyecto proyecto,
+                  Material material,
+                  int cantidad,
+                  LocalDate fecha) {
 
         this.codigo = codigo;
+        this.proyecto = proyecto;
         this.material = material;
         this.cantidad = cantidad;
         this.fecha = fecha;
@@ -41,6 +47,14 @@ public class Pedido implements Serializable {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
     }
 
     public Material getMaterial() {
@@ -82,9 +96,15 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "Pedido{" + "codigo=" + codigo + ", material=" + material + ", cantidad=" + cantidad + ", fecha=" + fecha + '}';
-    }
 
-    
+        return "Pedido{"
+                + "codigo=" + codigo
+                + ", proyecto=" + (proyecto != null ? proyecto.getCodigo() : "")
+                + ", material=" + material
+                + ", cantidad=" + cantidad
+                + ", fecha=" + fecha
+                + '}';
+
+    }
 
 }
