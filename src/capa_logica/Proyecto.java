@@ -34,7 +34,6 @@ public class Proyecto implements Serializable {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.responsable = responsable;
-
         pedidos = new ArrayList<>();
 
     }
