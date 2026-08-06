@@ -172,7 +172,7 @@ public class jdMateriales extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Código", "Nombre", "Descripción", "Precio", "Stock", "Vigencia", "Categoría", "Marca"
+                "Código", "Nombre", "Descripción", "Precio", "Stock", "Vigencia", "Categoría"
             }
         ));
         jScrollPane1.setViewportView(tblMaterial);
@@ -330,7 +330,7 @@ public class jdMateriales extends javax.swing.JDialog {
                     m.getCodigo(), m.getNombre(), m.getDescripcion(),
                     m.getPrecio(), m.getStock(),
                     m.isVigencia() ? "Vigente" : "No vigente",
-                    m.getCategoria(), m.getMarca()
+                    m.getCategoria()
                 };
                 modelo.addRow(fila);
             }

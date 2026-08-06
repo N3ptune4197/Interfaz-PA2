@@ -70,15 +70,13 @@
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jspCantidad" pref="210" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblCodigo1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblNombre1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblCodigo" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblNombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtCodigo" alignment="0" pref="210" max="32767" attributes="0"/>
-                              <Component id="txtFecha" alignment="0" max="32767" attributes="0"/>
-                              <Component id="cboMaterial" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="lblCodigo1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNombre1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCodigo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCodigo" alignment="0" pref="210" max="32767" attributes="0"/>
+                          <Component id="txtFecha" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cboMaterial" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="164" max="32767" attributes="0"/>
                   </Group>
@@ -191,12 +189,12 @@
         <Component class="javax.swing.JLabel" name="lblTitulo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="1"/>
+              <Font name="Roboto Black" size="18" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="d" green="65" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n Proyectos de:"/>
+            <Property name="text" type="java.lang.String" value="Pedido de:"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

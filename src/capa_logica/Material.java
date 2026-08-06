@@ -12,7 +12,6 @@ public class Material implements Serializable {
     private float precio;
     private int stock;
     private String categoria;
-    private String marca;
     private boolean vigencia;
 
     public Material() {
@@ -22,18 +21,16 @@ public class Material implements Serializable {
         precio = 0;
         stock = 0;
         categoria = "";
-        marca = "";
         vigencia = false;
     }
 
-    public Material(String codigo, String nombre, String descripcion, float precio, int stock, String categoria, String marca, boolean vigencia) {
+    public Material(String codigo, String nombre, String descripcion, float precio, int stock, String categoria, boolean vigencia) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.stock = stock;
         this.categoria = categoria;
-        this.marca = marca;
         this.vigencia = vigencia;
     }
 
@@ -83,14 +80,6 @@ public class Material implements Serializable {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
     }
 
     public boolean isVigencia() {

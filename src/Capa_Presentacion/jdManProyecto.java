@@ -4,6 +4,7 @@
  */
 package Capa_Presentacion;
 
+import Componentes.UtilidadFuentes;
 import capa_datos.ProyectoDAO;
 import capa_logica.Proyecto;
 import java.awt.Color;
@@ -31,6 +32,9 @@ public class jdManProyecto extends javax.swing.JDialog {
     public jdManProyecto(java.awt.Frame parent, boolean modal, Modo modo, String codigoProyecto) {
         super(parent, modal);
         initComponents();
+        
+        jLabel1.setFont(UtilidadFuentes.cargarFuenteVarsity(28f));
+        aplicarEstiloBordesTecnicos();
 
         this.modoActual = modo;
         this.idProyectoSeleccionado = codigoProyecto;
@@ -182,6 +186,17 @@ public class jdManProyecto extends javax.swing.JDialog {
         // TODO add your handling code here:
         btnGuardar.setContentAreaFilled(false);
     }//GEN-LAST:event_btnGuardarMouseExited
+    private void aplicarEstiloBordesTecnicos() {
+        // Estilo limpio para JTextFields y Spinner (usando focusWidth en lugar de borderWidth)
+        String estiloCampos = "arc: 4; borderWidth: 1; borderColor: #000099; focusColor: #EB5A0A;";
+
+        txtCodigo.putClientProperty("FlatLaf.style", estiloCampos);
+        txtNombre.putClientProperty("FlatLaf.style", estiloCampos);
+        txtUbicacion.putClientProperty("FlatLaf.style", estiloCampos);
+        txtResponsable.putClientProperty("FlatLaf.style", estiloCampos);
+
+    }
+    
     private void bloquearCampos(boolean activar) {
 
         txtCodigo.setEnabled(activar);
@@ -379,9 +394,7 @@ public class jdManProyecto extends javax.swing.JDialog {
         txtCodigo.setText("");
         txtNombre.setText("");
         txtUbicacion.setText("");
-        txtResponsable.setText("");
-
-        
+        txtResponsable.setText("");       
     }
 
     

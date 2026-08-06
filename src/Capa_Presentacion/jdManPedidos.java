@@ -23,28 +23,38 @@ import capa_datos.ProyectoDAO;
 public class jdManPedidos extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdManPedidos.class.getName());
-    private Proyecto proyecto;
+    
+    public enum Modo {
+        AGREGAR,
+        EDITAR,
+        ELIMINAR
+    }
+    
+    private Modo modoActual;
     private String codigoProyecto;
+    private String codigoPedidoSeleccionado;
+    private Proyecto proyecto;
     
     
-    public jdManPedidos(java.awt.Frame parent, boolean modal, String codigoProyecto) {
+    public jdManPedidos(java.awt.Frame parent, boolean modal, Modo modo, String codigoProyecto, String codigoPedido) {
 
         super(parent, modal);
         initComponents();
-
+        
+        this.modoActual = modo;
         this.codigoProyecto = codigoProyecto;
+        this.codigoPedidoSeleccionado = codigoPedido;
 
         setLocationRelativeTo(null);
+
+        jspCantidad.setModel(new SpinnerNumberModel(1, 1, 100000, 1));
+
+        txtFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
         cargarDatosProyecto();
         cargarMateriales();
 
-        jspCantidad.setModel(
-                new SpinnerNumberModel(1, 1, 100000, 1));
-
-        txtFecha.setText(
-                LocalDate.now().format(
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        configurarModoVisual();
     }
 
 
@@ -93,14 +103,13 @@ public class jdManPedidos extends javax.swing.JDialog {
                 .addGap(22, 22, 22)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jspCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                    .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblCodigo1)
-                        .addComponent(lblNombre1)
-                        .addComponent(lblCodigo)
-                        .addComponent(lblNombre)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                        .addComponent(txtFecha)
-                        .addComponent(cboMaterial, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(lblCodigo1)
+                    .addComponent(lblNombre1)
+                    .addComponent(lblCodigo)
+                    .addComponent(lblNombre)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                    .addComponent(txtFecha)
+                    .addComponent(cboMaterial, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(164, Short.MAX_VALUE))
         );
         jPanelContenedorLayout.setVerticalGroup(
@@ -148,9 +157,9 @@ public class jdManPedidos extends javax.swing.JDialog {
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
         jPanelFondo.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 440, 180, -1));
 
-        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 101, 13));
-        lblTitulo.setText("Gestión Proyectos de:");
+        lblTitulo.setText("Pedido de:");
         jPanelFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 102));
@@ -190,89 +199,101 @@ public class jdManPedidos extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGuardarMouseExited
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       
-        if (!validarCampos())
-            return;
+       if (!validarCampos()) return;
+
         try {
-            Proyecto proyecto =
-                    ProyectoDAO.consultarPorCodigo(codigoProyecto);
+            proyecto = ProyectoDAO.consultarPorCodigo(codigoProyecto);
             if (proyecto == null) {
-                JOptionPane.showMessageDialog(this,
-                        "Proyecto no encontrado.");
+                JOptionPane.showMessageDialog(this, "Proyecto no encontrado.");
                 return;
             }
 
-            for (Pedido p : proyecto.getPedidos()) {
-                if (p.getCodigo().equalsIgnoreCase(
-                        txtCodigo.getText().trim())) {
-                    JOptionPane.showMessageDialog(this,
-                            "Ya existe un pedido con ese código.");
-                    return;
+            Material material = (Material) cboMaterial.getSelectedItem();
+
+            // Verificar duplicado (solo en AGREGAR)
+            if (modoActual == Modo.AGREGAR) {
+                for (Pedido p : proyecto.getPedidos()) {
+                    if (p.getCodigo().equalsIgnoreCase(txtCodigo.getText().trim())) {
+                        JOptionPane.showMessageDialog(this, "Ya existe un pedido con ese código.");
+                        return;
+                    }
                 }
             }
-
-            Material material = (Material) cboMaterial.getSelectedItem();
 
             Pedido pedido = new Pedido(
                     txtCodigo.getText().trim(),
                     proyecto,
                     material,
                     (Integer) jspCantidad.getValue(),
-                    LocalDate.parse(
-                            txtFecha.getText(),
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                    LocalDate.parse(txtFecha.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
             );
 
-            proyecto.agregarPedido(pedido);
-            ProyectoDAO.modificar(proyecto);
-            JOptionPane.showMessageDialog(this, "Pedido registrado correctamente.");
+            switch (modoActual) {
+                case AGREGAR:
+                    proyecto.agregarPedido(pedido);
+                    ProyectoDAO.modificar(proyecto);
+                    JOptionPane.showMessageDialog(this, "Pedido registrado correctamente.");
+                    break;
+
+                case EDITAR:
+                    proyecto.getPedidos().removeIf(p -> p.getCodigo().equals(codigoPedidoSeleccionado));
+                    proyecto.agregarPedido(pedido);
+                    ProyectoDAO.modificar(proyecto);
+                    JOptionPane.showMessageDialog(this, "Pedido actualizado correctamente.");
+                    break;
+
+                case ELIMINAR:
+                    int confirm = JOptionPane.showConfirmDialog(this,
+                            "¿Está seguro de eliminar el pedido \"" + txtCodigo.getText() + "\"?",
+                            "Confirmar eliminación",
+                            JOptionPane.YES_NO_OPTION);
+                    if (confirm != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+                    proyecto.getPedidos().removeIf(p -> p.getCodigo().equals(codigoPedidoSeleccionado));
+                    ProyectoDAO.modificar(proyecto);
+                    JOptionPane.showMessageDialog(this, "Pedido eliminado correctamente.");
+                    break;
+            }
+
             dispose();
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,
-                    ex.getMessage());
-        }
-
-    
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }   
     }//GEN-LAST:event_btnGuardarActionPerformed
     
     private boolean validarCampos() {
-
         if (txtCodigo.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Ingrese el código."
-            );
+            JOptionPane.showMessageDialog(this, "Ingrese el código.");
             txtCodigo.requestFocus();
             return false;
         }
 
         if (cboMaterial.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Seleccione un material."
-            );
+            JOptionPane.showMessageDialog(this, "Seleccione un material.");
             cboMaterial.requestFocus();
             return false;
         }
 
         if ((Integer) jspCantidad.getValue() <= 0) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "La cantidad debe ser mayor a cero."
-            );
+            JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero.");
             jspCantidad.requestFocus();
             return false;
         }
+
+        // Validar fecha
+        try {
+            LocalDate.parse(txtFecha.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Fecha inválida. Use formato dd/MM/yyyy.");
+            txtFecha.requestFocus();
+            return false;
+        }
+
         return true;
     }    
-    
-    
-    
-    
-    
-    
-    
+  
     private void cargarMateriales() {
         try {
             cboMaterial.removeAllItems();
@@ -282,28 +303,90 @@ public class jdManPedidos extends javax.swing.JDialog {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-
     }    
-    
-    
-    
+ 
     private void cargarDatosProyecto() {
         try {
-            Proyecto proyecto = ProyectoDAO.consultarPorCodigo(codigoProyecto);
-            if (proyecto != null) {
-                lblTitulo.setText("Gestión de pedidos de: " + proyecto.getNombre());
+            Proyecto p = ProyectoDAO.consultarPorCodigo(codigoProyecto);
+            if (p != null) {
+                lblTitulo.setText("Pedido de: " + p.getNombre());
             }
-
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-
     }
     
+    private void configurarModoVisual() {
+        switch (modoActual) {
+            case AGREGAR:
+                setTitle("Registrar Pedido");
+                btnGuardar.setText("GUARDAR");
+                limpiarCampos();
+                txtCodigo.setEditable(true);
+                break;
+
+            case EDITAR:
+                setTitle("Editar Pedido");
+                btnGuardar.setText("ACTUALIZAR");
+                cargarPedido();
+                txtCodigo.setEditable(false);
+                break;
+
+            case ELIMINAR:
+                setTitle("Eliminar Pedido");
+                btnGuardar.setText("ELIMINAR");
+                cargarPedido();
+                bloquearCampos(false);
+                break;
+        }
+    }
     
+    private void limpiarCampos() {
+        txtCodigo.setText("");
+        txtFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        jspCantidad.setValue(1);
+        if (cboMaterial.getItemCount() > 0) {
+            cboMaterial.setSelectedIndex(0);
+        }
+    }
     
+    private void bloquearCampos(boolean activar) {
+        txtCodigo.setEnabled(activar);
+        cboMaterial.setEnabled(activar);
+        jspCantidad.setEnabled(activar);
+        txtFecha.setEnabled(activar);
+    }
     
-    
+    private void cargarPedido() {
+        try {
+            proyecto = ProyectoDAO.consultarPorCodigo(codigoProyecto);
+            if (proyecto == null) {
+                JOptionPane.showMessageDialog(this, "Proyecto no encontrado.");
+                return;
+            }
+
+            for (Pedido p : proyecto.getPedidos()) {
+                if (p.getCodigo().equals(codigoPedidoSeleccionado)) {
+                    txtCodigo.setText(p.getCodigo());
+                    txtFecha.setText(p.getFechaFormateada());
+                    jspCantidad.setValue(p.getCantidad());
+                    // Seleccionar el material en el combo
+                    for (int i = 0; i < cboMaterial.getItemCount(); i++) {
+                        Material m = cboMaterial.getItemAt(i);
+                        if (m.getCodigo().equals(p.getMaterial().getCodigo())) {
+                            cboMaterial.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Pedido no encontrado.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar pedido: " + ex.getMessage());
+        }
+    }
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<Material> cboMaterial;

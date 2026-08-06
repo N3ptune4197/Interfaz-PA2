@@ -229,13 +229,13 @@ public class jdReportes extends javax.swing.JDialog {
 
         tblReportes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane2.setViewportView(tblReportes);
@@ -286,9 +286,9 @@ public class jdReportes extends javax.swing.JDialog {
         lblTitulo2.setIconTextGap(10);
         jPanel1.add(lblTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 200, -1));
 
-        lblReporte.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblReporte.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         lblReporte.setForeground(new java.awt.Color(232, 108, 54));
-        jPanel1.add(lblReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 250, 30));
+        jPanel1.add(lblReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 250, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

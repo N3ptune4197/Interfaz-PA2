@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Capa_Presentacion.jdManProyecto;
 import Capa_Presentacion.jdManPedidos;
+import capa_logica.Pedido;
 
 
 
@@ -77,16 +78,18 @@ public class jdProyectos extends javax.swing.JDialog {
         lblTitulo = new javax.swing.JLabel();
         btnCerrar = new javax.swing.JButton();
         btnAgregarPedido = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnEliminarPedido = new javax.swing.JButton();
         pnBarra = new javax.swing.JPanel();
         lblMarDer = new javax.swing.JLabel();
         lblMarIzq = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProyectos = new javax.swing.JTable();
-        btnEditar = new javax.swing.JButton();
+        btnEditarPedido = new javax.swing.JButton();
         lblAbajoIzq = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btnAgregar = new javax.swing.JButton();
+        btnAgregarProyecto = new javax.swing.JButton();
+        btnEditarProyecto = new javax.swing.JButton();
+        btnEliminarProyecto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -139,26 +142,26 @@ public class jdProyectos extends javax.swing.JDialog {
             }
         });
         btnAgregarPedido.addActionListener(this::btnAgregarPedidoActionPerformed);
-        bg.add(btnAgregarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 190, 40));
+        bg.add(btnAgregarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 200, 40));
 
-        btnEliminar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(232, 108, 54));
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/eliminar.png"))); // NOI18N
-        btnEliminar.setText("| Eliminar");
-        btnEliminar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
-        btnEliminar.setContentAreaFilled(false);
-        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEliminar.setIconTextGap(10);
-        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEliminarPedido.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnEliminarPedido.setForeground(new java.awt.Color(232, 108, 54));
+        btnEliminarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/eliminar.png"))); // NOI18N
+        btnEliminarPedido.setText("| Eliminar Pedido");
+        btnEliminarPedido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnEliminarPedido.setContentAreaFilled(false);
+        btnEliminarPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarPedido.setIconTextGap(10);
+        btnEliminarPedido.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseEntered(evt);
+                btnEliminarPedidoMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseExited(evt);
+                btnEliminarPedidoMouseExited(evt);
             }
         });
-        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
-        bg.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 420, 130, 40));
+        btnEliminarPedido.addActionListener(this::btnEliminarPedidoActionPerformed);
+        bg.add(btnEliminarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 430, 200, 40));
 
         pnBarra.setBackground(new java.awt.Color(255, 255, 255));
         pnBarra.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -206,26 +209,26 @@ public class jdProyectos extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblProyectos);
 
-        bg.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 770, 320));
+        bg.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 770, 290));
 
-        btnEditar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
-        btnEditar.setForeground(new java.awt.Color(232, 108, 54));
-        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/editar.png"))); // NOI18N
-        btnEditar.setText("| Editar");
-        btnEditar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
-        btnEditar.setContentAreaFilled(false);
-        btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEditar.setIconTextGap(10);
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEditarPedido.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnEditarPedido.setForeground(new java.awt.Color(232, 108, 54));
+        btnEditarPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/editar.png"))); // NOI18N
+        btnEditarPedido.setText("| Editar Pedido");
+        btnEditarPedido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnEditarPedido.setContentAreaFilled(false);
+        btnEditarPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditarPedido.setIconTextGap(10);
+        btnEditarPedido.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditarMouseEntered(evt);
+                btnEditarPedidoMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditarMouseExited(evt);
+                btnEditarPedidoMouseExited(evt);
             }
         });
-        btnEditar.addActionListener(this::btnEditarActionPerformed);
-        bg.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, 130, 40));
+        btnEditarPedido.addActionListener(this::btnEditarPedidoActionPerformed);
+        bg.add(btnEditarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 200, 40));
 
         lblAbajoIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/marco_abajo.png"))); // NOI18N
         bg.add(lblAbajoIzq, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, -1, -1));
@@ -233,24 +236,62 @@ public class jdProyectos extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/marco_abajo_der.png"))); // NOI18N
         bg.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 460, 90, -1));
 
-        btnAgregar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
-        btnAgregar.setForeground(new java.awt.Color(232, 108, 54));
-        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/agregar.png"))); // NOI18N
-        btnAgregar.setText("| Agregar");
-        btnAgregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
-        btnAgregar.setContentAreaFilled(false);
-        btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAgregar.setIconTextGap(10);
-        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgregarProyecto.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnAgregarProyecto.setForeground(new java.awt.Color(232, 108, 54));
+        btnAgregarProyecto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/agregar.png"))); // NOI18N
+        btnAgregarProyecto.setText("| Agregar Proyecto");
+        btnAgregarProyecto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnAgregarProyecto.setContentAreaFilled(false);
+        btnAgregarProyecto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarProyecto.setIconTextGap(10);
+        btnAgregarProyecto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAgregarMouseEntered(evt);
+                btnAgregarProyectoMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAgregarMouseExited(evt);
+                btnAgregarProyectoMouseExited(evt);
             }
         });
-        btnAgregar.addActionListener(this::btnAgregarActionPerformed);
-        bg.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 130, 40));
+        btnAgregarProyecto.addActionListener(this::btnAgregarProyectoActionPerformed);
+        bg.add(btnAgregarProyecto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 200, 40));
+
+        btnEditarProyecto.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnEditarProyecto.setForeground(new java.awt.Color(232, 108, 54));
+        btnEditarProyecto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/editar.png"))); // NOI18N
+        btnEditarProyecto.setText("| Editar Proyecto");
+        btnEditarProyecto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnEditarProyecto.setContentAreaFilled(false);
+        btnEditarProyecto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditarProyecto.setIconTextGap(10);
+        btnEditarProyecto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarProyectoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditarProyectoMouseExited(evt);
+            }
+        });
+        btnEditarProyecto.addActionListener(this::btnEditarProyectoActionPerformed);
+        bg.add(btnEditarProyecto, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, 200, 40));
+
+        btnEliminarProyecto.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
+        btnEliminarProyecto.setForeground(new java.awt.Color(232, 108, 54));
+        btnEliminarProyecto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/eliminar.png"))); // NOI18N
+        btnEliminarProyecto.setText("| Eliminar Proyecto");
+        btnEliminarProyecto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
+        btnEliminarProyecto.setContentAreaFilled(false);
+        btnEliminarProyecto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarProyecto.setIconTextGap(10);
+        btnEliminarProyecto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEliminarProyectoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEliminarProyectoMouseExited(evt);
+            }
+        });
+        btnEliminarProyecto.addActionListener(this::btnEliminarProyectoActionPerformed);
+        bg.add(btnEliminarProyecto, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, 200, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -272,51 +313,48 @@ public class jdProyectos extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnAgregarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPedidoActionPerformed
-
         int fila = tblProyectos.getSelectedRow();
         if (fila == -1) {
-            JOptionPane.showMessageDialog(this,
-                    "Seleccione un proyecto.");
+            JOptionPane.showMessageDialog(this, "Seleccione un proyecto.");
             return;
         }
-        String codigoProyecto =
-                tblProyectos.getValueAt(fila, 0).toString();
+        String codigoProyecto = tblProyectos.getValueAt(fila, 0).toString();
 
         jdManPedidos frm = new jdManPedidos(
-                (java.awt.Frame) getParent(),
-                true,
-                codigoProyecto);
-
+            (java.awt.Frame) getParent(),
+            true,
+            jdManPedidos.Modo.AGREGAR,
+            codigoProyecto,
+            null
+        );
         frm.setVisible(true);
-
+        
         listarProyectos();
-
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    private void btnEliminarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPedidoActionPerformed
         int fila = tblProyectos.getSelectedRow();
-
         if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un proyecto.");
+            return;
+        }
+        String codigoProyecto = tblProyectos.getValueAt(fila, 0).toString();
 
-            JOptionPane.showMessageDialog(this,
-                    "Seleccione un proyecto.");
-
+        String codigoPedido = seleccionarPedido(codigoProyecto);
+        if (codigoPedido == null) {
             return;
         }
 
-        String codigo = tblProyectos.getValueAt(fila, 0).toString();
-
-        jdManProyecto ventana = new jdManProyecto(
-                (java.awt.Frame) getParent(),
-                true,
-                jdManProyecto.Modo.ELIMINAR,
-                codigo);
-
-        ventana.setVisible(true);
-
-        listarProyectos();
-        
-    }//GEN-LAST:event_btnEliminarActionPerformed
+        jdManPedidos frm = new jdManPedidos(
+            (java.awt.Frame) getParent(),
+            true,
+            jdManPedidos.Modo.ELIMINAR,
+            codigoProyecto,
+            codigoPedido
+        );
+        frm.setVisible(true);
+        listarProyectos();   
+    }//GEN-LAST:event_btnEliminarPedidoActionPerformed
 
     private void pnBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMouseDragged
         // TODO add your handling code here:
@@ -331,8 +369,113 @@ public class jdProyectos extends javax.swing.JDialog {
         yMouse = evt.getY();
     }//GEN-LAST:event_pnBarraMousePressed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-            
+    private void btnEditarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPedidoActionPerformed
+        int fila = tblProyectos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un proyecto.");
+            return;
+        }
+        String codigoProyecto = tblProyectos.getValueAt(fila, 0).toString();
+
+        String codigoPedido = seleccionarPedido(codigoProyecto);
+        if (codigoPedido == null) {
+            return;
+        }
+
+        jdManPedidos frm = new jdManPedidos(
+            (java.awt.Frame) getParent(),
+            true,
+            jdManPedidos.Modo.EDITAR,
+            codigoProyecto,
+            codigoPedido
+        );
+        frm.setVisible(true);
+        listarProyectos();
+
+    }//GEN-LAST:event_btnEditarPedidoActionPerformed
+
+    private void btnAgregarProyectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProyectoActionPerformed
+        // TODO add your handling code here:
+        
+        jdManProyecto ventana = new jdManProyecto(
+                (java.awt.Frame) getParent(),
+                true,
+                jdManProyecto.Modo.AGREGAR,
+                null);
+
+        ventana.setVisible(true);
+
+        listarProyectos();
+    }//GEN-LAST:event_btnAgregarProyectoActionPerformed
+
+    private void btnAgregarProyectoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProyectoMouseEntered
+        // TODO add your handling code here:
+        btnAgregarProyecto.setContentAreaFilled(true);
+        btnAgregarProyecto.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnAgregarProyectoMouseEntered
+
+    private void btnEditarPedidoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarPedidoMouseEntered
+        // TODO add your handling code here:
+        btnEditarPedido.setContentAreaFilled(true);
+        btnEditarPedido.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnEditarPedidoMouseEntered
+
+    private void btnEliminarPedidoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPedidoMouseEntered
+        // TODO add your handling code here:
+        btnEliminarPedido.setContentAreaFilled(true);
+        btnEliminarPedido.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnEliminarPedidoMouseEntered
+
+    private void btnAgregarPedidoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarPedidoMouseEntered
+        // TODO add your handling code here:
+        btnAgregarPedido.setContentAreaFilled(true);
+        btnAgregarPedido.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnAgregarPedidoMouseEntered
+
+    private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(true);
+        btnCerrar.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnCerrarMouseEntered
+
+    private void btnAgregarProyectoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarProyectoMouseExited
+        // TODO add your handling code here:
+        btnAgregarProyecto.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnAgregarProyectoMouseExited
+
+    private void btnEditarPedidoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarPedidoMouseExited
+        // TODO add your handling code here:
+        btnEditarPedido.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnEditarPedidoMouseExited
+
+    private void btnEliminarPedidoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarPedidoMouseExited
+        // TODO add your handling code here:
+        btnEliminarPedido.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnEliminarPedidoMouseExited
+
+    private void btnAgregarPedidoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarPedidoMouseExited
+        // TODO add your handling code here:
+        btnAgregarPedido.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnAgregarPedidoMouseExited
+
+    private void btnCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseExited
+        // TODO add your handling code here:
+        btnCerrar.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnCerrarMouseExited
+
+    private void btnEditarProyectoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarProyectoMouseEntered
+        // TODO add your handling code here:
+        btnEditarProyecto.setContentAreaFilled(true);
+        btnEditarProyecto.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnEditarProyectoMouseEntered
+
+    private void btnEditarProyectoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarProyectoMouseExited
+        // TODO add your handling code here:
+        btnEditarProyecto.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnEditarProyectoMouseExited
+
+    private void btnEditarProyectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProyectoActionPerformed
+        // TODO add your handling code here:
         int fila = tblProyectos.getSelectedRow();
 
         if (fila == -1) {
@@ -354,85 +497,91 @@ public class jdProyectos extends javax.swing.JDialog {
         ventana.setVisible(true);
 
         listarProyectos();
+    }//GEN-LAST:event_btnEditarProyectoActionPerformed
 
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+    private void btnEliminarProyectoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarProyectoMouseEntered
         // TODO add your handling code here:
-        
+        btnEliminarProyecto.setContentAreaFilled(true);
+        btnEliminarProyecto.setBackground(new Color(255, 200, 150));
+    }//GEN-LAST:event_btnEliminarProyectoMouseEntered
+
+    private void btnEliminarProyectoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarProyectoMouseExited
+        // TODO add your handling code here:
+        btnEliminarProyecto.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnEliminarProyectoMouseExited
+
+    private void btnEliminarProyectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProyectoActionPerformed
+        // TODO add your handling code here:
+        int fila = tblProyectos.getSelectedRow();
+
+        if (fila == -1) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione un proyecto.");
+
+            return;
+        }
+
+        String codigo = tblProyectos.getValueAt(fila, 0).toString();
+
         jdManProyecto ventana = new jdManProyecto(
                 (java.awt.Frame) getParent(),
                 true,
-                jdManProyecto.Modo.AGREGAR,
-                null);
+                jdManProyecto.Modo.ELIMINAR,
+                codigo);
 
         ventana.setVisible(true);
 
         listarProyectos();
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    }//GEN-LAST:event_btnEliminarProyectoActionPerformed
 
-    private void btnAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseEntered
-        // TODO add your handling code here:
-        btnAgregar.setContentAreaFilled(true);
-        btnAgregar.setBackground(new Color(255, 200, 150));
-    }//GEN-LAST:event_btnAgregarMouseEntered
+    private String seleccionarPedido(String codigoProyecto) {
+        try {
+            Proyecto proyecto = ProyectoDAO.consultarPorCodigo(codigoProyecto);
+            if (proyecto == null || proyecto.getPedidos().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Este proyecto no tiene pedidos.");
+                return null;
+            }
 
-    private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
-        // TODO add your handling code here:
-        btnEditar.setContentAreaFilled(true);
-        btnEditar.setBackground(new Color(255, 200, 150));
-    }//GEN-LAST:event_btnEditarMouseEntered
+            // Crear un array con los codigos de los pedidos
+            String[] opciones = new String[proyecto.getPedidos().size()];
+            for (int i = 0; i < proyecto.getPedidos().size(); i++) {
+                Pedido p = proyecto.getPedidos().get(i);
+                opciones[i] = p.getCodigo() + " - " + p.getMaterial().getNombre() + " x" + p.getCantidad();
+            }
 
-    private void btnEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseEntered
-        // TODO add your handling code here:
-        btnEliminar.setContentAreaFilled(true);
-        btnEliminar.setBackground(new Color(255, 200, 150));
-    }//GEN-LAST:event_btnEliminarMouseEntered
+            // Mostrar diálogo para seleccionar
+            String seleccion = (String) JOptionPane.showInputDialog(
+                this,
+                "Seleccione el pedido que desea editar/eliminar:",
+                "Seleccionar Pedido",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+            );
 
-    private void btnAgregarPedidoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarPedidoMouseEntered
-        // TODO add your handling code here:
-        btnAgregarPedido.setContentAreaFilled(true);
-        btnAgregarPedido.setBackground(new Color(255, 200, 150));
-    }//GEN-LAST:event_btnAgregarPedidoMouseEntered
+            if (seleccion == null) {
+                return null; // Usuario canceló
+            }
 
-    private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
-        // TODO add your handling code here:
-        btnCerrar.setContentAreaFilled(true);
-        btnCerrar.setBackground(new Color(255, 200, 150));
-    }//GEN-LAST:event_btnCerrarMouseEntered
+            // Extraer solo el código (antes del " - ")
+            return seleccion.split(" - ")[0];
 
-    private void btnAgregarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseExited
-        // TODO add your handling code here:
-        btnAgregar.setContentAreaFilled(false);
-    }//GEN-LAST:event_btnAgregarMouseExited
-
-    private void btnEditarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseExited
-        // TODO add your handling code here:
-        btnEditar.setContentAreaFilled(false);
-    }//GEN-LAST:event_btnEditarMouseExited
-
-    private void btnEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseExited
-        // TODO add your handling code here:
-        btnEliminar.setContentAreaFilled(false);
-    }//GEN-LAST:event_btnEliminarMouseExited
-
-    private void btnAgregarPedidoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarPedidoMouseExited
-        // TODO add your handling code here:
-        btnAgregarPedido.setContentAreaFilled(false);
-    }//GEN-LAST:event_btnAgregarPedidoMouseExited
-
-    private void btnCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseExited
-        // TODO add your handling code here:
-        btnCerrar.setContentAreaFilled(false);
-    }//GEN-LAST:event_btnCerrarMouseExited
-
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            return null;
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
-    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAgregarPedido;
+    private javax.swing.JButton btnAgregarProyecto;
     private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEditarPedido;
+    private javax.swing.JButton btnEditarProyecto;
+    private javax.swing.JButton btnEliminarPedido;
+    private javax.swing.JButton btnEliminarProyecto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAbajoIzq;
