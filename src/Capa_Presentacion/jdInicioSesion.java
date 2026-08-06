@@ -252,7 +252,7 @@ public class jdInicioSesion extends javax.swing.JDialog {
         
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnCerrar;

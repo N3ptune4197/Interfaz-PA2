@@ -5,15 +5,26 @@
 package capa_presentacion;
 
 import java.awt.Color;
+import capa_datos.MaterialDAO;
+import capa_datos.ProyectoDAO;
+import capa_logica.Material;
+import capa_logica.Pedido;
+import capa_logica.Proyecto;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author JIMMYSIN
  */
 public class jdReportes extends javax.swing.JDialog {
-    
+
     int xMouse, yMouse;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdReportes.class.getName());
+     private DefaultTableModel modelo;
+   
 
     /**
      * Creates new form jdReportes
@@ -22,6 +33,11 @@ public class jdReportes extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
+
+        cboProyecto.setVisible(false);
+
+        cboMaterial.setVisible(false);
+        
     }
 
     /**
@@ -46,8 +62,13 @@ public class jdReportes extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         btnStock = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        tblReportes = new javax.swing.JTable();
         btnCerrar = new javax.swing.JButton();
+        cboProyecto = new javax.swing.JComboBox<>();
+        cboMaterial = new javax.swing.JComboBox<>();
+        lblTitulo1 = new javax.swing.JLabel();
+        lblTitulo2 = new javax.swing.JLabel();
+        lblReporte = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -60,9 +81,9 @@ public class jdReportes extends javax.swing.JDialog {
         lblTitulo.setForeground(new java.awt.Color(232, 108, 54));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/informes-removebg-preview.png"))); // NOI18N
-        lblTitulo.setText("REPORTES");
+        lblTitulo.setText("REPORTE");
         lblTitulo.setIconTextGap(10);
-        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 470, -1));
+        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 200, -1));
 
         btnLimpiar.setFont(new java.awt.Font("Roboto Condensed", 1, 18)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(232, 108, 54));
@@ -70,7 +91,7 @@ public class jdReportes extends javax.swing.JDialog {
         btnLimpiar.setText("| Limpiar");
         btnLimpiar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
         btnLimpiar.setContentAreaFilled(false);
-        btnLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLimpiar.setHideActionText(true);
         btnLimpiar.setIconTextGap(25);
         btnLimpiar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -90,7 +111,7 @@ public class jdReportes extends javax.swing.JDialog {
         btnPedidos.setText("| Ver Pedidos");
         btnPedidos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
         btnPedidos.setContentAreaFilled(false);
-        btnPedidos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPedidos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnPedidos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnPedidos.setIconTextGap(25);
         btnPedidos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -110,7 +131,7 @@ public class jdReportes extends javax.swing.JDialog {
         btnTotalGastado.setText("| Total Gastado");
         btnTotalGastado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
         btnTotalGastado.setContentAreaFilled(false);
-        btnTotalGastado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTotalGastado.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnTotalGastado.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnTotalGastado.setIconTextGap(25);
         btnTotalGastado.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -151,11 +172,13 @@ public class jdReportes extends javax.swing.JDialog {
         );
         pnBarraLayout.setVerticalGroup(
             pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBarraLayout.createSequentialGroup()
-                .addGap(0, 2, Short.MAX_VALUE)
-                .addGroup(pnBarraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMarIzq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblMarDer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(pnBarraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblMarDer, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnBarraLayout.createSequentialGroup()
+                .addComponent(lblMarIzq, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel1.add(pnBarra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 810, 60));
@@ -166,7 +189,7 @@ public class jdReportes extends javax.swing.JDialog {
         btnMateriales.setText("| Materiales");
         btnMateriales.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
         btnMateriales.setContentAreaFilled(false);
-        btnMateriales.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMateriales.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMateriales.setIconTextGap(25);
         btnMateriales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -191,7 +214,7 @@ public class jdReportes extends javax.swing.JDialog {
         btnStock.setText("| Ver Stock");
         btnStock.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
         btnStock.setContentAreaFilled(false);
-        btnStock.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnStock.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnStock.setIconTextGap(25);
         btnStock.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -204,9 +227,18 @@ public class jdReportes extends javax.swing.JDialog {
         btnStock.addActionListener(this::btnStockActionPerformed);
         jPanel1.add(btnStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 200, 40));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        tblReportes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblReportes);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 770, 270));
 
@@ -216,7 +248,7 @@ public class jdReportes extends javax.swing.JDialog {
         btnCerrar.setText("| Cerrar");
         btnCerrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(232, 108, 54)));
         btnCerrar.setContentAreaFilled(false);
-        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCerrar.setHideActionText(true);
         btnCerrar.setIconTextGap(25);
         btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -229,6 +261,34 @@ public class jdReportes extends javax.swing.JDialog {
         });
         btnCerrar.addActionListener(this::btnCerrarActionPerformed);
         jPanel1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 430, 150, 40));
+
+        cboProyecto.setModel(new DefaultComboBoxModel<>());
+        cboProyecto.addActionListener(this::cboProyectoActionPerformed);
+        jPanel1.add(cboProyecto, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, -1, -1));
+
+        cboMaterial.setModel(new javax.swing.DefaultComboBoxModel<>());
+        cboMaterial.addActionListener(this::cboMaterialActionPerformed);
+        jPanel1.add(cboMaterial, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 50, -1, -1));
+
+        lblTitulo1.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
+        lblTitulo1.setForeground(new java.awt.Color(232, 108, 54));
+        lblTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTitulo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/informes-removebg-preview.png"))); // NOI18N
+        lblTitulo1.setText("REPORTE");
+        lblTitulo1.setIconTextGap(10);
+        jPanel1.add(lblTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 200, -1));
+
+        lblTitulo2.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
+        lblTitulo2.setForeground(new java.awt.Color(232, 108, 54));
+        lblTitulo2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTitulo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/informes-removebg-preview.png"))); // NOI18N
+        lblTitulo2.setText("REPORTE");
+        lblTitulo2.setIconTextGap(10);
+        jPanel1.add(lblTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 200, -1));
+
+        lblReporte.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblReporte.setForeground(new java.awt.Color(232, 108, 54));
+        jPanel1.add(lblReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 250, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,14 +306,23 @@ public class jdReportes extends javax.swing.JDialog {
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
+        lblReporte.setText("");
+        ocultarCombos();
+        tblReportes.setModel(new DefaultTableModel());
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
         // TODO add your handling code here:
+        ocultarCombos();
+        reportePedidos();
     }//GEN-LAST:event_btnPedidosActionPerformed
 
     private void btnTotalGastadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalGastadoActionPerformed
         // TODO add your handling code here:
+        ocultarCombos();
+        cboProyecto.setVisible(true);
+        cargarProyectos();
+
     }//GEN-LAST:event_btnTotalGastadoActionPerformed
 
     private void pnBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMouseDragged
@@ -271,10 +340,16 @@ public class jdReportes extends javax.swing.JDialog {
 
     private void btnMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaterialesActionPerformed
         // TODO add your handling code here:
+        ocultarCombos();
+        cboMaterial.setVisible(true);
+        cargarMateriales();
     }//GEN-LAST:event_btnMaterialesActionPerformed
 
     private void btnStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockActionPerformed
         // TODO add your handling code here:
+        ocultarCombos();
+        reporteStock();
+
     }//GEN-LAST:event_btnStockActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
@@ -348,6 +423,249 @@ public class jdReportes extends javax.swing.JDialog {
         btnCerrar.setContentAreaFilled(false);
     }//GEN-LAST:event_btnCerrarMouseExited
 
+    private void cboProyectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboProyectoActionPerformed
+        // TODO add your handling code here:
+        if (cboProyecto.getSelectedItem() != null) {
+            reporteTotalProyecto();
+        }
+    }//GEN-LAST:event_cboProyectoActionPerformed
+
+    private void cboMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMaterialActionPerformed
+        // TODO add your handling code here:
+        if (cboMaterial.getSelectedItem() != null) {
+            reporteMaterial();
+        }
+    }//GEN-LAST:event_cboMaterialActionPerformed
+
+    private void ocultarCombos() {
+        cboProyecto.setVisible(false);
+        cboMaterial.setVisible(false);
+
+    }
+
+    private void reporteMaterial() {
+
+        try {
+            limpiarTabla();
+            lblReporte.setText("Materiales");
+
+            String nombreMaterial = cboMaterial.getSelectedItem().toString();
+
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.addColumn("Proyecto");
+            modelo.addColumn("Cantidad");
+            modelo.addColumn("Fecha");
+            modelo.addColumn("Subtotal");
+
+            for (Proyecto pro : ProyectoDAO.consultarTodos()) {
+
+                for (Pedido ped : pro.getPedidos()) {
+
+                    if (ped.getMaterial().getNombre().equals(nombreMaterial)) {
+
+                        modelo.addRow(new Object[]{
+                            pro.getNombre(),
+                            ped.getCantidad(),
+                            ped.getFechaFormateada(),
+                            ped.getSubtotal()
+                        });
+
+                    }
+
+                }
+
+            }
+
+            tblReportes.setModel(modelo);
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+
+        }
+
+    }
+
+    private void limpiarTabla() {
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        tblReportes.setModel(modelo);
+
+    }
+    
+    private void reporteTotalProyecto() {
+
+        try {
+            limpiarTabla();
+            lblReporte.setText("Total Gastado");
+
+            String nombreProyecto = cboProyecto.getSelectedItem().toString();
+
+            Proyecto proyectoSeleccionado = null;
+
+            for (Proyecto p : ProyectoDAO.consultarTodos()) {
+
+                if (p.getNombre().equals(nombreProyecto)) {
+
+                    proyectoSeleccionado = p;
+                    break;
+
+                }
+
+            }
+
+            if (proyectoSeleccionado == null) {
+                return;
+            }
+
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.addColumn("Material");
+            modelo.addColumn("Cantidad");
+            modelo.addColumn("Precio");
+            modelo.addColumn("Subtotal");
+
+            for (Pedido ped : proyectoSeleccionado.getPedidos()) {
+
+                modelo.addRow(new Object[]{
+                    ped.getMaterial().getNombre(),
+                    ped.getCantidad(),
+                    ped.getMaterial().getPrecio(),
+                    ped.getSubtotal()
+                });
+
+            }
+
+            modelo.addRow(new Object[]{
+                "",
+                "",
+                "TOTAL",
+                proyectoSeleccionado.getMontoTotal()
+            });
+
+            tblReportes.setModel(modelo);
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+
+        }
+
+    }
+
+    private void reportePedidos() {
+
+        try {
+            limpiarTabla();
+            lblReporte.setText("Visualizar Pedidos");
+
+            DefaultTableModel modelo = new DefaultTableModel();
+
+            modelo.addColumn("Proyecto");
+            modelo.addColumn("Material");
+            modelo.addColumn("Cantidad");
+            modelo.addColumn("Fecha");
+            modelo.addColumn("Subtotal");
+
+            for (Proyecto pro : ProyectoDAO.consultarTodos()) {
+
+                for (Pedido ped : pro.getPedidos()) {
+
+                    modelo.addRow(new Object[]{
+                        pro.getNombre(),
+                        ped.getMaterial().getNombre(),
+                        ped.getCantidad(),
+                        ped.getFechaFormateada(),
+                        ped.getSubtotal()
+                    });
+
+                }
+
+            }
+
+            tblReportes.setModel(modelo);
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+
+        }
+
+    }
+
+    private void reporteStock() {
+
+        try {
+            limpiarTabla();
+            lblReporte.setText("Visualizar Stock");
+
+            modelo = new DefaultTableModel();
+
+            modelo.addColumn("Código");
+            modelo.addColumn("Material");
+            modelo.addColumn("Categoría");
+            modelo.addColumn("Precio");
+            modelo.addColumn("Stock");
+
+            ArrayList<Material> lista = MaterialDAO.consultarTodos();
+
+            for (Material m : lista) {
+
+                modelo.addRow(new Object[]{
+                    m.getCodigo(),
+                    m.getNombre(),
+                    m.getCategoria(),
+                    m.getPrecio(),
+                    m.getStock()
+                });
+
+            }
+
+            tblReportes.setModel(modelo);
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage());
+
+        }
+
+    }
+
+    private void cargarMateriales() {
+
+        try {
+
+        cboMaterial.removeAllItems();
+
+        for (Material m : MaterialDAO.consultarTodos()) {
+            cboMaterial.addItem(m.getNombre());
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+    }
+
+    private void cargarProyectos() {
+
+       try {
+
+        cboProyecto.removeAllItems();
+
+        for (Proyecto m : ProyectoDAO.consultarTodos()) {
+            cboProyecto.addItem(m.getNombre());
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnLimpiar;
@@ -355,14 +673,19 @@ public class jdReportes extends javax.swing.JDialog {
     private javax.swing.JButton btnPedidos;
     private javax.swing.JButton btnStock;
     private javax.swing.JButton btnTotalGastado;
+    private javax.swing.JComboBox<String> cboMaterial;
+    private javax.swing.JComboBox<String> cboProyecto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblAbajoIzq;
     private javax.swing.JLabel lblMarDer;
     private javax.swing.JLabel lblMarIzq;
+    private javax.swing.JLabel lblReporte;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTitulo1;
+    private javax.swing.JLabel lblTitulo2;
     private javax.swing.JPanel pnBarra;
+    private javax.swing.JTable tblReportes;
     // End of variables declaration//GEN-END:variables
 }

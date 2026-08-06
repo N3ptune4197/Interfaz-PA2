@@ -74,9 +74,9 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         txtDescripcion = new javax.swing.JTextField();
         chkVigencia = new javax.swing.JCheckBox();
         cboCategoria = new javax.swing.JComboBox<>();
-        cboMarca = new javax.swing.JComboBox<>();
         btnNewCat = new javax.swing.JButton();
         btnNewMarca = new javax.swing.JButton();
+        txtMarca = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -108,16 +108,18 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
 
         txtCodigo.addActionListener(this::txtCodigotxtCodigoActionPerformed);
 
+        txtNombre.addActionListener(this::txtNombreActionPerformed);
+
         chkVigencia.setText("(Vigente)");
 
         cboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidad", "Millar", "Metro", "Metro cuadrado", "Metro Cúbico", "Bolsa", "Varillas" }));
         cboCategoria.addActionListener(this::cboCategoriaActionPerformed);
 
-        cboMarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnNewCat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/nuevo.png"))); // NOI18N
+        btnNewCat.addActionListener(this::btnNewCatActionPerformed);
 
         btnNewMarca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/nuevo.png"))); // NOI18N
+        btnNewMarca.addActionListener(this::btnNewMarcaActionPerformed);
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -135,7 +137,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                         .addComponent(txtCodigo))
                     .addComponent(lblPrecio)
                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(46, 46, 46)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
@@ -150,9 +152,9 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMarca))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnNewCat, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
@@ -204,10 +206,10 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblPrecio)
                                     .addComponent(lblMarca))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(btnNewMarca, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -220,7 +222,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         btnGuardar.setText("| Guardar");
         btnGuardar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 0), 1, true));
         btnGuardar.setContentAreaFilled(false);
-        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnGuardar.setFocusPainted(false);
         btnGuardar.setHideActionText(true);
         btnGuardar.setIconTextGap(15);
@@ -292,7 +294,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                     Material nuevo = new Material(
                             codigo, txtNombre.getText().trim(), txtDescripcion.getText().trim(),
                             Float.parseFloat(txtPrecio.getText().trim()), (int) spnStock.getValue(),
-                            cboCategoria.getSelectedItem().toString(), cboMarca.getSelectedItem().toString(),
+                            cboCategoria.getSelectedItem().toString(), txtMarca.getText().trim(),
                             chkVigencia.isSelected()
                     );
                     MaterialDAO.agregar(nuevo);
@@ -311,7 +313,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                     Material actualizado = new Material(
                             idMaterialSeleccionado, txtNombre.getText().trim(), txtDescripcion.getText().trim(),
                             Float.parseFloat(txtPrecio.getText().trim()), (int) spnStock.getValue(),
-                            cboCategoria.getSelectedItem().toString(), cboMarca.getSelectedItem().toString(),
+                            cboCategoria.getSelectedItem().toString(), txtMarca.getText().trim(),
                             chkVigencia.isSelected()
                     );
                     MaterialDAO.modificar(actualizado);
@@ -345,6 +347,18 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
     private void cboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboCategoriaActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void btnNewMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewMarcaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNewMarcaActionPerformed
+
+    private void btnNewCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewCatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNewCatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -384,7 +398,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         spnStock.setEnabled(activar);
         chkVigencia.setEnabled(activar);
         cboCategoria.setEnabled(activar);
-        cboMarca.setEnabled(activar);
+        txtMarca.setEnabled(activar);
         btnNewCat.setEnabled(activar);
         btnNewMarca.setEnabled(activar);
     }
@@ -395,13 +409,12 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         txtDescripcion.setText("");
         txtPrecio.setText("");
         spnStock.setValue(0);
+        txtMarca.setText("");
         chkVigencia.setSelected(false);
         if (cboCategoria.getItemCount() > 0) {
             cboCategoria.setSelectedIndex(0);
         }
-        if (cboMarca.getItemCount() > 0) {
-            cboMarca.setSelectedIndex(0);
-        }
+       
     }
 
     private void cargarDatosMaterial(String codigo) {
@@ -415,7 +428,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                 spnStock.setValue(m.getStock());
                 chkVigencia.setSelected(m.isVigencia());
                 cboCategoria.setSelectedItem(m.getCategoria());
-                cboMarca.setSelectedItem(m.getMarca());
+                txtMarca.setText(m.getMarca());
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error al cargar el material: " + ex.getMessage());
@@ -459,11 +472,11 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         txtDescripcion.putClientProperty("FlatLaf.style", estiloCampos);
         txtPrecio.putClientProperty("FlatLaf.style", estiloCampos);
         spnStock.putClientProperty("FlatLaf.style", estiloCampos);
+        txtMarca.putClientProperty("FlatLaf.style", estiloCampos);
 
         // Estilo seguro para ComboBoxes
         String estiloCombo = "arc: 4; borderColor: #000099;";
         cboCategoria.putClientProperty("FlatLaf.style", estiloCombo);
-        cboMarca.putClientProperty("FlatLaf.style", estiloCombo);
 
         // Estilo seguro para botones "NEW" (sin 'arc' directo para evitar excepciones)
         String estiloBotonNew = "borderWidth: 1; borderColor: #000099; focusColor: #EB5A0A;";
@@ -477,7 +490,6 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
     private javax.swing.JButton btnNewCat;
     private javax.swing.JButton btnNewMarca;
     private javax.swing.JComboBox<String> cboCategoria;
-    private javax.swing.JComboBox<String> cboMarca;
     private javax.swing.JCheckBox chkVigencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelContenedor;
@@ -495,6 +507,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
     private javax.swing.JSpinner spnStock;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
