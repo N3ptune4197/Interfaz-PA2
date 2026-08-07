@@ -15,10 +15,8 @@ public class EstiloApp {
 
     public static void aplicarTema() {
         try {
-            // Puedes usar FlatDarkLaf (oscuro) o FlatLightLaf (claro)
             FlatLightLaf.setup();
 
-            // Opcional: Ajustes globales de fuentes o colores si lo deseas
             UIManager.put("Button.arc", 10);
             UIManager.put("Component.arc", 10);
         } catch (Exception ex) {

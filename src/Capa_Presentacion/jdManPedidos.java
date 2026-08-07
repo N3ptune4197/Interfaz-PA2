@@ -9,7 +9,6 @@ import capa_logica.Material;
 import capa_logica.Pedido;
 import capa_logica.Proyecto;
 import java.awt.Color;
-import java.awt.Frame;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -463,7 +462,7 @@ public class jdManPedidos extends javax.swing.JDialog {
         }
     }
 
-// Devuelve stock cuando se elimina o se edita (cantidad anterior)
+    // Devuelve stock cuando se elimina o se edita (cantidad anterior)
     private void devolverStock(Material material, int cantidad) throws Exception {
         Material actualizado = MaterialDAO.consultarPorCodigo(material.getCodigo());
         if (actualizado != null) {

@@ -546,14 +546,13 @@ public class jdProyectos extends javax.swing.JDialog {
                 return null;
             }
 
-            // Crear un array con los codigos de los pedidos
+            // Creamos un array con los codigos de los pedidos
             String[] opciones = new String[proyecto.getPedidos().size()];
             for (int i = 0; i < proyecto.getPedidos().size(); i++) {
                 Pedido p = proyecto.getPedidos().get(i);
                 opciones[i] = p.getCodigo() + " - " + p.getMaterial().getNombre() + " x" + p.getCantidad();
             }
 
-            // Mostrar diálogo para seleccionar
             String seleccion = (String) JOptionPane.showInputDialog(
                     this,
                     "Seleccione el pedido que desea editar/eliminar:",
@@ -568,7 +567,7 @@ public class jdProyectos extends javax.swing.JDialog {
                 return null; // Usuario canceló
             }
 
-            // Extraer solo el código (antes del " - ")
+            // Extraemos solo el código (antes del " - ")
             return seleccion.split(" - ")[0];
 
         } catch (Exception ex) {

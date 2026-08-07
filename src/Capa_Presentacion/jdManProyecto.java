@@ -391,15 +391,13 @@ public class jdManProyecto extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUbicaciontxtCodigoActionPerformed
 
-
     private void limpiarCampos() {
         txtCodigo.setText("");
         txtNombre.setText("");
         txtUbicacion.setText("");
         txtResponsable.setText("");       
     }
-
-    
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JPanel jPanelContenedor;

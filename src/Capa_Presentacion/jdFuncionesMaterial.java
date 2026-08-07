@@ -36,15 +36,13 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         setResizable(false);
         // Spinner: valor inicial 0, mínimo 0, sin máximo, incrementos de 1
         spnStock.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        // Redondear los bordes del panel contenedor principal con FlatLaf
-        // <-- Agregamos la llamada aquí
+
         lblTitle.setFont(UtilidadFuentes.cargarFuenteVarsity(28f));
         aplicarEstiloBordesTecnicos();
 
         this.modoActual = modo;
         this.idMaterialSeleccionado = idMaterial;
 
-        // Centramos la ventana en la pantalla
         this.setLocationRelativeTo(null);
 
         configurarModoVisual();
@@ -441,7 +439,6 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
     }
 
     private void aplicarEstiloBordesTecnicos() {
-        // Estilo limpio para JTextFields y Spinner 
         String estiloCampos = "arc: 4; borderWidth: 1; borderColor: #000099; focusColor: #EB5A0A;";
 
         txtCodigo.putClientProperty("FlatLaf.style", estiloCampos);

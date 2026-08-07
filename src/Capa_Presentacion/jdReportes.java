@@ -674,7 +674,6 @@ public class jdReportes extends javax.swing.JDialog {
 
     }
 
-    // int... indicesColumnas significa "puedo recibir cero, uno, o varios valores int separados por coma"
     private void alinearColumnasNumericas(int alineacion, int... indicesColumnas) {
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setHorizontalAlignment(alineacion);

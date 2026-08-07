@@ -92,13 +92,4 @@ public class Usuario {
         else
             return false;
     }
-    
-    public int generarAleatorio()
-    {
-        Random  valor = new Random();
-        int dato;
-        
-        dato = valor.nextInt(10000, 99999);
-        return dato;
-    }
 }
