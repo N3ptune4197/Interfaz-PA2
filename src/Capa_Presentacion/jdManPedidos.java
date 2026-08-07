@@ -212,6 +212,23 @@ public class jdManPedidos extends javax.swing.JDialog {
 
             Material material = (Material) cboMaterial.getSelectedItem();
 
+            int cantidad = (Integer) jspCantidad.getValue();
+
+            if (cantidad > material.getStock()) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        """
+                        No hay suficiente stock.
+                        Material: """ + material.getNombre()
+                        + "\nDisponible: " + material.getStock()
+                        + "\nSolicitado: " + cantidad,
+                        "Stock insuficiente",
+                        JOptionPane.WARNING_MESSAGE);
+
+                return;
+            }
+
             // Verificar duplicado (solo en AGREGAR)
             if (modoActual == Modo.AGREGAR) {
                 for (Pedido p : proyecto.getPedidos()) {
