@@ -99,6 +99,17 @@ public class Proyecto implements Serializable {
         return total;
 
     }
+    
+    public int getCantidadPedidos() {
+
+    if (pedidos == null) {
+        return 0;
+    }
+
+    return pedidos.size();
+
+}
+    
 
     @Override
     public String toString() {

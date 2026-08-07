@@ -47,6 +47,7 @@ public class jdProyectos extends javax.swing.JDialog {
             modelo.addColumn("Nombre");
             modelo.addColumn("Ubicación");
             modelo.addColumn("Responsable");
+            modelo.addColumn("Cantidad de Pedidos");
 
             for (Proyecto p : ProyectoDAO.consultarTodos()) {
 
@@ -54,7 +55,8 @@ public class jdProyectos extends javax.swing.JDialog {
                     p.getCodigo(),
                     p.getNombre(),
                     p.getUbicacion(),
-                    p.getResponsable()
+                    p.getResponsable(),
+                    p.getCantidadPedidos()
                 });
 
             }
