@@ -9,6 +9,7 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 import capa_datos.MaterialDAO;
 import capa_logica.Material;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -34,7 +35,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
 
         setResizable(false);
         // Spinner: valor inicial 0, mínimo 0, sin máximo, incrementos de 1
-        spnStock.setModel(new javax.swing.SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+        spnStock.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         // Redondear los bordes del panel contenedor principal con FlatLaf
         // <-- Agregamos la llamada aquí
         lblTitle.setFont(UtilidadFuentes.cargarFuenteVarsity(28f));
@@ -249,15 +250,15 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                     return;
                 }
                 try {
-                                        if (txtCodigo.getText().trim().isEmpty()) {
+                    if (txtCodigo.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(this, "Ingrese el código del material.");
                         txtCodigo.requestFocus();
                         return;
-                        }
+                    }
                     if (txtNombre.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(this, "Ingrese el nombre del material.");
                         txtNombre.requestFocus();
-                        return;   
+                        return;
                     }
                     if (txtPrecio.getText().trim().isEmpty()) {
                         JOptionPane.showMessageDialog(this,
@@ -273,7 +274,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                         txtPrecio.requestFocus();
                         return;
                     }
-                    
+
                     int stock = (int) spnStock.getValue();
 
                     if (stock < 0) {
@@ -282,8 +283,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                         spnStock.requestFocus();
                         return;
                     }
-                    
-                    
+
                     String codigo = txtCodigo.getText().trim();
                     if (MaterialDAO.consultarPorCodigo(codigo) != null) {
                         JOptionPane.showMessageDialog(this, "Ya existe un material con ese código.");
@@ -351,8 +351,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         switch (modoActual) {
             case AGREGAR:
                 setTitle("Registrar Nuevo Material");
-                // Asegúrate de que el nombre de tu botón en el diseño sea 'btnGuardar' 
-                // o cámbialo por el nombre real de tu botón de acción principal.
+
                 btnGuardar.setText("GUARDAR");
                 limpiarCampos();
                 txtCodigo.setEditable(true);
@@ -382,7 +381,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         spnStock.setEnabled(activar);
         chkVigencia.setEnabled(activar);
         txtCategoria.setEnabled(activar);
-       
+
     }
 
     private void limpiarCampos() {
@@ -393,7 +392,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         spnStock.setValue(0);
         chkVigencia.setSelected(false);
         txtCategoria.setText("");
-       
+
     }
 
     private void cargarDatosMaterial(String codigo) {
@@ -451,7 +450,6 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         txtPrecio.putClientProperty("FlatLaf.style", estiloCampos);
         spnStock.putClientProperty("FlatLaf.style", estiloCampos);
         txtCategoria.putClientProperty("FlatLaf.style", estiloCampos);
-
 
     }
 

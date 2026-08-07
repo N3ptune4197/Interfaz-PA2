@@ -21,28 +21,27 @@ import capa_datos.ProyectoDAO;
  * @author User
  */
 public class jdManPedidos extends javax.swing.JDialog {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdManPedidos.class.getName());
-    
+
     public enum Modo {
         AGREGAR,
         EDITAR,
         ELIMINAR
     }
-    
+
     private Modo modoActual;
     private String codigoProyecto;
     private String codigoPedidoSeleccionado;
     private Proyecto proyecto;
-    
-    
+
     public jdManPedidos(java.awt.Frame parent, boolean modal, Modo modo, String codigoProyecto, String codigoPedido) {
 
         super(parent, modal);
         initComponents();
-        
+
         setResizable(false);
-        
+
         this.modoActual = modo;
         this.codigoProyecto = codigoProyecto;
         this.codigoPedidoSeleccionado = codigoPedido;
@@ -58,7 +57,6 @@ public class jdManPedidos extends javax.swing.JDialog {
 
         configurarModoVisual();
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -201,7 +199,9 @@ public class jdManPedidos extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGuardarMouseExited
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       if (!validarCampos()) return;
+        if (!validarCampos()) {
+            return;
+        }
 
         try {
             proyecto = ProyectoDAO.consultarPorCodigo(codigoProyecto);
@@ -209,27 +209,43 @@ public class jdManPedidos extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Proyecto no encontrado.");
                 return;
             }
-
             Material material = (Material) cboMaterial.getSelectedItem();
-
             int cantidad = (Integer) jspCantidad.getValue();
 
-            if (cantidad > material.getStock()) {
+            // Si estamos editando, recuperamos el pedido anterior para "liberar" su cantidad
+            int cantidadAnterior = 0;
+            Material materialAnterior = null;
 
+            if (modoActual == Modo.EDITAR) {
+                for (Pedido p : proyecto.getPedidos()) {
+                    if (p.getCodigo().equals(codigoPedidoSeleccionado)) {
+                        cantidadAnterior = p.getCantidad();
+                        materialAnterior = p.getMaterial();
+                        break;
+                    }
+                }
+            }
+
+            // Stock disponible real: si es el mismo material que antes, se suma lo que se libera
+            int stockDisponible = material.getStock();
+            if (modoActual == Modo.EDITAR && materialAnterior != null
+                    && materialAnterior.getCodigo().equals(material.getCodigo())) {
+                stockDisponible += cantidadAnterior;
+            }
+
+            if (modoActual != Modo.ELIMINAR && cantidad > stockDisponible) {
                 JOptionPane.showMessageDialog(
                         this,
                         """
-                        No hay suficiente stock.
-                        Material: """ + material.getNombre()
-                        + "\nDisponible: " + material.getStock()
+                    No hay suficiente stock.
+                    Material: """ + material.getNombre()
+                        + "\nDisponible: " + stockDisponible
                         + "\nSolicitado: " + cantidad,
                         "Stock insuficiente",
                         JOptionPane.WARNING_MESSAGE);
-
                 return;
             }
 
-            // Verificar duplicado (solo en AGREGAR)
             if (modoActual == Modo.AGREGAR) {
                 for (Pedido p : proyecto.getPedidos()) {
                     if (p.getCodigo().equalsIgnoreCase(txtCodigo.getText().trim())) {
@@ -243,7 +259,7 @@ public class jdManPedidos extends javax.swing.JDialog {
                     txtCodigo.getText().trim(),
                     proyecto,
                     material,
-                    (Integer) jspCantidad.getValue(),
+                    cantidad,
                     LocalDate.parse(txtFecha.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
             );
 
@@ -251,6 +267,7 @@ public class jdManPedidos extends javax.swing.JDialog {
                 case AGREGAR:
                     proyecto.agregarPedido(pedido);
                     ProyectoDAO.modificar(proyecto);
+                    descontarStock(material, cantidad);
                     JOptionPane.showMessageDialog(this, "Pedido registrado correctamente.");
                     break;
 
@@ -258,6 +275,10 @@ public class jdManPedidos extends javax.swing.JDialog {
                     proyecto.getPedidos().removeIf(p -> p.getCodigo().equals(codigoPedidoSeleccionado));
                     proyecto.agregarPedido(pedido);
                     ProyectoDAO.modificar(proyecto);
+                    if (materialAnterior != null) {
+                        devolverStock(materialAnterior, cantidadAnterior);
+                    }
+                    descontarStock(material, cantidad);
                     JOptionPane.showMessageDialog(this, "Pedido actualizado correctamente.");
                     break;
 
@@ -269,19 +290,33 @@ public class jdManPedidos extends javax.swing.JDialog {
                     if (confirm != JOptionPane.YES_OPTION) {
                         return;
                     }
+
+                    int cantidadAEliminar = 0;
+                    Material materialAEliminar = null;
+                    for (Pedido p : proyecto.getPedidos()) {
+                        if (p.getCodigo().equals(codigoPedidoSeleccionado)) {
+                            cantidadAEliminar = p.getCantidad();
+                            materialAEliminar = p.getMaterial();
+                            break;
+                        }
+                    }
+
                     proyecto.getPedidos().removeIf(p -> p.getCodigo().equals(codigoPedidoSeleccionado));
                     ProyectoDAO.modificar(proyecto);
+
+                    if (materialAEliminar != null) {
+                        devolverStock(materialAEliminar, cantidadAEliminar);
+                    }
                     JOptionPane.showMessageDialog(this, "Pedido eliminado correctamente.");
                     break;
             }
 
             dispose();
-
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-        }   
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
-    
+
     private boolean validarCampos() {
         if (txtCodigo.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Ingrese el código.");
@@ -291,6 +326,15 @@ public class jdManPedidos extends javax.swing.JDialog {
 
         if (cboMaterial.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Seleccione un material.");
+            cboMaterial.requestFocus();
+            return false;
+        }
+
+        Material materialSeleccionado = (Material) cboMaterial.getSelectedItem();
+        if (!materialSeleccionado.isVigencia() && modoActual == Modo.AGREGAR) {
+            JOptionPane.showMessageDialog(this,
+                    "El material \"" + materialSeleccionado.getNombre() + "\" no está vigente. "
+                    + "No se pueden registrar pedidos nuevos con este material.");
             cboMaterial.requestFocus();
             return false;
         }
@@ -311,19 +355,23 @@ public class jdManPedidos extends javax.swing.JDialog {
         }
 
         return true;
-    }    
-  
+    }
+
     private void cargarMateriales() {
         try {
             cboMaterial.removeAllItems();
             for (Material m : MaterialDAO.consultarTodos()) {
+                
+                if (modoActual == Modo.AGREGAR && !m.isVigencia()) {
+                    continue;
+                }
                 cboMaterial.addItem(m);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-    }    
- 
+    }
+
     private void cargarDatosProyecto() {
         try {
             Proyecto p = ProyectoDAO.consultarPorCodigo(codigoProyecto);
@@ -334,7 +382,7 @@ public class jdManPedidos extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
-    
+
     private void configurarModoVisual() {
         switch (modoActual) {
             case AGREGAR:
@@ -359,7 +407,7 @@ public class jdManPedidos extends javax.swing.JDialog {
                 break;
         }
     }
-    
+
     private void limpiarCampos() {
         txtCodigo.setText("");
         txtFecha.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -368,14 +416,14 @@ public class jdManPedidos extends javax.swing.JDialog {
             cboMaterial.setSelectedIndex(0);
         }
     }
-    
+
     private void bloquearCampos(boolean activar) {
         txtCodigo.setEnabled(activar);
         cboMaterial.setEnabled(activar);
         jspCantidad.setEnabled(activar);
         txtFecha.setEnabled(activar);
     }
-    
+
     private void cargarPedido() {
         try {
             proyecto = ProyectoDAO.consultarPorCodigo(codigoProyecto);
@@ -405,7 +453,24 @@ public class jdManPedidos extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error al cargar pedido: " + ex.getMessage());
         }
     }
- 
+
+    // Descuenta stock cuando se crea/edita un pedido
+    private void descontarStock(Material material, int cantidad) throws Exception {
+        Material actualizado = MaterialDAO.consultarPorCodigo(material.getCodigo());
+        if (actualizado != null) {
+            actualizado.setStock(actualizado.getStock() - cantidad);
+            MaterialDAO.modificar(actualizado);
+        }
+    }
+
+// Devuelve stock cuando se elimina o se edita (cantidad anterior)
+    private void devolverStock(Material material, int cantidad) throws Exception {
+        Material actualizado = MaterialDAO.consultarPorCodigo(material.getCodigo());
+        if (actualizado != null) {
+            actualizado.setStock(actualizado.getStock() + cantidad);
+            MaterialDAO.modificar(actualizado);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<Material> cboMaterial;

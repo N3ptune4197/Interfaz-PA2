@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package capa_presentacion;
+
 import capa_datos.ProyectoDAO;
 import capa_logica.Proyecto;
 import javax.swing.JOptionPane;
@@ -10,19 +11,20 @@ import javax.swing.table.DefaultTableModel;
 import Capa_Presentacion.jdManProyecto;
 import Capa_Presentacion.jdManPedidos;
 import capa_logica.Pedido;
-
-
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import java.awt.Color;
+import java.awt.geom.RoundRectangle2D;
 
 /**
  *
  * @author JIMMYSIN
  */
 public class jdProyectos extends javax.swing.JDialog {
-    
+
     int xMouse, yMouse;
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdProyectos.class.getName());
 
     /**
@@ -31,13 +33,11 @@ public class jdProyectos extends javax.swing.JDialog {
     public jdProyectos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
+        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
         setLocationRelativeTo(null);
         listarProyectos();
     }
 
-   
-    
     private void listarProyectos() {
         try {
 
@@ -62,6 +62,7 @@ public class jdProyectos extends javax.swing.JDialog {
             }
 
             tblProyectos.setModel(modelo);
+            alinearColumnasNumericas(SwingConstants.RIGHT, 4);
 
         } catch (Exception ex) {
 
@@ -71,7 +72,7 @@ public class jdProyectos extends javax.swing.JDialog {
         }
 
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -323,14 +324,14 @@ public class jdProyectos extends javax.swing.JDialog {
         String codigoProyecto = tblProyectos.getValueAt(fila, 0).toString();
 
         jdManPedidos frm = new jdManPedidos(
-            (java.awt.Frame) getParent(),
-            true,
-            jdManPedidos.Modo.AGREGAR,
-            codigoProyecto,
-            null
+                (java.awt.Frame) getParent(),
+                true,
+                jdManPedidos.Modo.AGREGAR,
+                codigoProyecto,
+                null
         );
         frm.setVisible(true);
-        
+
         listarProyectos();
     }//GEN-LAST:event_btnAgregarPedidoActionPerformed
 
@@ -348,14 +349,14 @@ public class jdProyectos extends javax.swing.JDialog {
         }
 
         jdManPedidos frm = new jdManPedidos(
-            (java.awt.Frame) getParent(),
-            true,
-            jdManPedidos.Modo.ELIMINAR,
-            codigoProyecto,
-            codigoPedido
+                (java.awt.Frame) getParent(),
+                true,
+                jdManPedidos.Modo.ELIMINAR,
+                codigoProyecto,
+                codigoPedido
         );
         frm.setVisible(true);
-        listarProyectos();   
+        listarProyectos();
     }//GEN-LAST:event_btnEliminarPedidoActionPerformed
 
     private void pnBarraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnBarraMouseDragged
@@ -385,11 +386,11 @@ public class jdProyectos extends javax.swing.JDialog {
         }
 
         jdManPedidos frm = new jdManPedidos(
-            (java.awt.Frame) getParent(),
-            true,
-            jdManPedidos.Modo.EDITAR,
-            codigoProyecto,
-            codigoPedido
+                (java.awt.Frame) getParent(),
+                true,
+                jdManPedidos.Modo.EDITAR,
+                codigoProyecto,
+                codigoPedido
         );
         frm.setVisible(true);
         listarProyectos();
@@ -398,7 +399,7 @@ public class jdProyectos extends javax.swing.JDialog {
 
     private void btnAgregarProyectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProyectoActionPerformed
         // TODO add your handling code here:
-        
+
         jdManProyecto ventana = new jdManProyecto(
                 (java.awt.Frame) getParent(),
                 true,
@@ -554,13 +555,13 @@ public class jdProyectos extends javax.swing.JDialog {
 
             // Mostrar diálogo para seleccionar
             String seleccion = (String) JOptionPane.showInputDialog(
-                this,
-                "Seleccione el pedido que desea editar/eliminar:",
-                "Seleccionar Pedido",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                opciones,
-                opciones[0]
+                    this,
+                    "Seleccione el pedido que desea editar/eliminar:",
+                    "Seleccionar Pedido",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[0]
             );
 
             if (seleccion == null) {
@@ -573,6 +574,17 @@ public class jdProyectos extends javax.swing.JDialog {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
             return null;
+        }
+    }
+
+    private void alinearColumnasNumericas(int alineacion, int... indicesColumnas) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(alineacion);
+
+        for (int col : indicesColumnas) {
+            if (col < tblProyectos.getColumnCount()) {
+                tblProyectos.getColumnModel().getColumn(col).setCellRenderer(renderer);
+            }
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

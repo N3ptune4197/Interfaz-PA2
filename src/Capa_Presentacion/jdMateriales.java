@@ -8,6 +8,7 @@ import Capa_Presentacion.jdFuncionesMaterial;
 import capa_datos.MaterialDAO;
 import capa_logica.Material;
 import java.awt.Color;
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +28,7 @@ public class jdMateriales extends javax.swing.JDialog {
     public jdMateriales(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
+        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
         cargarTablaMateriales();
 
     }

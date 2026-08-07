@@ -10,6 +10,7 @@ import capa_datos.ProyectoDAO;
 import capa_logica.Material;
 import capa_logica.Pedido;
 import capa_logica.Proyecto;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -33,7 +34,7 @@ public class jdReportes extends javax.swing.JDialog {
     public jdReportes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
+        setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
 
         cboProyecto.setVisible(false);
 
