@@ -33,7 +33,9 @@ public class jdManProyecto extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        jLabel1.setFont(UtilidadFuentes.cargarFuenteVarsity(28f));
+        setResizable(false);
+        
+        lblTitle.setFont(UtilidadFuentes.cargarFuenteVarsity(28f));
         aplicarEstiloBordesTecnicos();
 
         this.modoActual = modo;
@@ -65,7 +67,7 @@ public class jdManProyecto extends javax.swing.JDialog {
         lblNombre1 = new javax.swing.JLabel();
         txtResponsable = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblFondo = new javax.swing.JLabel();
 
@@ -151,9 +153,9 @@ public class jdManProyecto extends javax.swing.JDialog {
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
         jPanelFondo.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 440, 180, -1));
 
-        jLabel1.setForeground(new java.awt.Color(255, 101, 13));
-        jLabel1.setText("Gestión de Proyectos");
-        jPanelFondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+        lblTitle.setForeground(new java.awt.Color(0, 0, 102));
+        lblTitle.setText("Gestión de Proyectos");
+        jPanelFondo.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 102));
         jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 153)));
@@ -400,7 +402,6 @@ public class jdManProyecto extends javax.swing.JDialog {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JPanel jPanelFondo;
     private javax.swing.JSeparator jSeparator1;
@@ -409,6 +410,7 @@ public class jdManProyecto extends javax.swing.JDialog {
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNombre1;
+    private javax.swing.JLabel lblTitle;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtResponsable;

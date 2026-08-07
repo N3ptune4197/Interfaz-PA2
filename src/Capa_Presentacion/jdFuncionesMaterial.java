@@ -32,11 +32,12 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        setResizable(false);
         // Spinner: valor inicial 0, mínimo 0, sin máximo, incrementos de 1
         spnStock.setModel(new javax.swing.SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         // Redondear los bordes del panel contenedor principal con FlatLaf
         // <-- Agregamos la llamada aquí
-        jLabel1.setFont(UtilidadFuentes.cargarFuenteVarsity(28f));
+        lblTitle.setFont(UtilidadFuentes.cargarFuenteVarsity(28f));
         aplicarEstiloBordesTecnicos();
 
         this.modoActual = modo;
@@ -75,7 +76,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         cboCategoria = new javax.swing.JComboBox<>();
         btnNewCat = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblFondo = new javax.swing.JLabel();
 
@@ -184,13 +185,12 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
                         .addGap(11, 11, 11)
                         .addComponent(lblPrecio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(27, Short.MAX_VALUE))
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
                         .addComponent(lblDescripcion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(89, Short.MAX_VALUE))))
+                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jPanelFondo.add(jPanelContenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, 330));
@@ -216,9 +216,9 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
         jPanelFondo.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 440, 180, -1));
 
-        jLabel1.setForeground(new java.awt.Color(255, 101, 13));
-        jLabel1.setText("Gestión de Materiales");
-        jPanelFondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+        lblTitle.setForeground(new java.awt.Color(0, 0, 102));
+        lblTitle.setText("Gestión de Materiales");
+        jPanelFondo.add(lblTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 102));
         jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 153)));
@@ -433,7 +433,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
     }
 
     private void aplicarEstiloBordesTecnicos() {
-        // Estilo limpio para JTextFields y Spinner (usando focusWidth en lugar de borderWidth)
+        // Estilo limpio para JTextFields y Spinner 
         String estiloCampos = "arc: 4; borderWidth: 1; borderColor: #000099; focusColor: #EB5A0A;";
 
         txtCodigo.putClientProperty("FlatLaf.style", estiloCampos);
@@ -446,7 +446,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
         String estiloCombo = "arc: 4; borderColor: #000099;";
         cboCategoria.putClientProperty("FlatLaf.style", estiloCombo);
 
-        // Estilo seguro para botones "NEW" (sin 'arc' directo para evitar excepciones)
+        // Estilo seguro para botones "NEW" 
         String estiloBotonNew = "borderWidth: 1; borderColor: #000099; focusColor: #EB5A0A;";
         btnNewCat.putClientProperty("FlatLaf.style", estiloBotonNew);
 
@@ -457,7 +457,6 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
     private javax.swing.JButton btnNewCat;
     private javax.swing.JComboBox<String> cboCategoria;
     private javax.swing.JCheckBox chkVigencia;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JPanel jPanelFondo;
     private javax.swing.JSeparator jSeparator1;
@@ -468,6 +467,7 @@ public class jdFuncionesMaterial extends javax.swing.JDialog {
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblStock;
+    private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblVigencia;
     private javax.swing.JSpinner spnStock;
     private javax.swing.JTextField txtCodigo;

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -23,8 +25,7 @@ public class jdReportes extends javax.swing.JDialog {
 
     int xMouse, yMouse;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(jdReportes.class.getName());
-     private DefaultTableModel modelo;
-   
+    private DefaultTableModel modelo;
 
     /**
      * Creates new form jdReportes
@@ -37,7 +38,7 @@ public class jdReportes extends javax.swing.JDialog {
         cboProyecto.setVisible(false);
 
         cboMaterial.setVisible(false);
-        
+
     }
 
     /**
@@ -478,7 +479,9 @@ public class jdReportes extends javax.swing.JDialog {
             }
 
             tblReportes.setModel(modelo);
-
+            alinearColumnasNumericas(SwingConstants.RIGHT, 1, 3);
+            alinearColumnasNumericas(SwingConstants.CENTER, 2);
+            
         } catch (Exception ex) {
 
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -487,14 +490,6 @@ public class jdReportes extends javax.swing.JDialog {
 
     }
 
-    private void limpiarTabla() {
-
-        DefaultTableModel modelo = new DefaultTableModel();
-
-        tblReportes.setModel(modelo);
-
-    }
-    
     private void reporteTotalProyecto() {
 
         try {
@@ -546,6 +541,7 @@ public class jdReportes extends javax.swing.JDialog {
             });
 
             tblReportes.setModel(modelo);
+            alinearColumnasNumericas(SwingConstants.RIGHT, 1, 2, 3);
 
         } catch (Exception ex) {
 
@@ -586,6 +582,8 @@ public class jdReportes extends javax.swing.JDialog {
             }
 
             tblReportes.setModel(modelo);
+            alinearColumnasNumericas(SwingConstants.RIGHT, 2, 4);
+            alinearColumnasNumericas(SwingConstants.CENTER, 3);
 
         } catch (Exception ex) {
 
@@ -624,6 +622,7 @@ public class jdReportes extends javax.swing.JDialog {
             }
 
             tblReportes.setModel(modelo);
+            alinearColumnasNumericas(SwingConstants.RIGHT, 3, 4);
 
         } catch (Exception ex) {
 
@@ -638,10 +637,10 @@ public class jdReportes extends javax.swing.JDialog {
 
         try {
 
-        cboMaterial.removeAllItems();
+            cboMaterial.removeAllItems();
 
-        for (Material m : MaterialDAO.consultarTodos()) {
-            cboMaterial.addItem(m.getNombre());
+            for (Material m : MaterialDAO.consultarTodos()) {
+                cboMaterial.addItem(m.getNombre());
             }
 
         } catch (Exception ex) {
@@ -652,12 +651,12 @@ public class jdReportes extends javax.swing.JDialog {
 
     private void cargarProyectos() {
 
-       try {
+        try {
 
-        cboProyecto.removeAllItems();
+            cboProyecto.removeAllItems();
 
-        for (Proyecto m : ProyectoDAO.consultarTodos()) {
-            cboProyecto.addItem(m.getNombre());
+            for (Proyecto m : ProyectoDAO.consultarTodos()) {
+                cboProyecto.addItem(m.getNombre());
             }
 
         } catch (Exception ex) {
@@ -666,6 +665,25 @@ public class jdReportes extends javax.swing.JDialog {
 
     }
 
+    private void limpiarTabla() {
+
+        DefaultTableModel modelo = new DefaultTableModel();
+
+        tblReportes.setModel(modelo);
+
+    }
+
+    // int... indicesColumnas significa "puedo recibir cero, uno, o varios valores int separados por coma"
+    private void alinearColumnasNumericas(int alineacion, int... indicesColumnas) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(alineacion);
+
+        for (int col : indicesColumnas) {
+            if (col < tblReportes.getColumnCount()) {
+                tblReportes.getColumnModel().getColumn(col).setCellRenderer(renderer);
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnLimpiar;

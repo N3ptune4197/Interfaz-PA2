@@ -41,6 +41,8 @@ public class jdManPedidos extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
+        setResizable(false);
+        
         this.modoActual = modo;
         this.codigoProyecto = codigoProyecto;
         this.codigoPedidoSeleccionado = codigoPedido;
@@ -158,7 +160,7 @@ public class jdManPedidos extends javax.swing.JDialog {
         jPanelFondo.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 440, 180, -1));
 
         lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
-        lblTitulo.setForeground(new java.awt.Color(255, 101, 13));
+        lblTitulo.setForeground(new java.awt.Color(0, 0, 102));
         lblTitulo.setText("Pedido de:");
         jPanelFondo.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 

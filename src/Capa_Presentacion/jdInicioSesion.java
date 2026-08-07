@@ -26,6 +26,7 @@ public class jdInicioSesion extends javax.swing.JDialog {
         initComponents();
 
         setShape(new java.awt.geom.RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
+
     }
 
     /**
@@ -168,7 +169,7 @@ public class jdInicioSesion extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -246,13 +247,13 @@ public class jdInicioSesion extends javax.swing.JDialog {
                 txtPasword.setText("");
                 txtUsuario.requestFocus();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Debe ingresarse usuario y contraseña");
         }
-        
+
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JButton btnCerrar;
